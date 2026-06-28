@@ -15,7 +15,7 @@ public class EnemiesStatsLib : MonoBehaviour
         }
     }
 
-    public EnemyStatsPreset GetPreset(enemyType type)
+    public EnemyStatsPreset GetPreset(EnemyType type)
     {
         return enemiesStatsPresets[type];
     }
@@ -23,7 +23,7 @@ public class EnemiesStatsLib : MonoBehaviour
     [System.Serializable]
     public struct EnemyStatsPreset
     {
-        public enemyType enemyType;
+        public EnemyType enemyType;
         public float hp;
         public float speed;
         public float maxSpeed;
@@ -34,6 +34,6 @@ public class EnemiesStatsLib : MonoBehaviour
         public float scoreValue;
     }
 
-    private Dictionary<enemyType, EnemyStatsPreset> enemiesStatsPresets = new Dictionary<enemyType, EnemyStatsPreset>();
+    private Dictionary<EnemyType, EnemyStatsPreset> enemiesStatsPresets = new Dictionary<EnemyType, EnemyStatsPreset>();
 
 }

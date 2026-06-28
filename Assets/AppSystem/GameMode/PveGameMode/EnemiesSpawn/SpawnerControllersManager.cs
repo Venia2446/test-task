@@ -46,14 +46,14 @@ public class SpawnerControllersManager : MonoBehaviour
     public void Spawn()
     {
         var rdnSpawnerIdx = Random.Range(0, spawnerControllers.Count - 1);
-        var rdnEnemyType = (enemyType)Random.Range(0, System.Enum.GetValues(typeof(enemyType)).Length);
+        var rdnEnemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
         spawnerControllers[rdnSpawnerIdx].SpawnEnemy(enemyDatas[rdnEnemyType], target);
     }
 
     private List<EnemyMovementControllerBase> enemiesControllers = new List<EnemyMovementControllerBase>();
     private List<EnemySpawnController> spawnerControllers = new List<EnemySpawnController>();
     private DiffcultyPreset diffPreset;
-    private Dictionary<enemyType, EnemyData> enemyDatas;
+    private Dictionary<EnemyType, EnemyData> enemyDatas;
     private GameObject target;
 
 }

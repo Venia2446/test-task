@@ -18,11 +18,11 @@ public class AudioSystem : MonoBehaviour
         audioSourceGame?.Stop();
     }
 
-    public void PlayOneShot(AudiolClipType type)
+    public void PlayOneShot(AudioClipType type)
     {
         audioSourceGame.PlayOneShot(datas[type]);
     }
 
-    private Dictionary<AudiolClipType, AudioClip> datas;
+    private Dictionary<AudioClipType, AudioClip> datas;
 
 }

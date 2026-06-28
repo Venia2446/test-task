@@ -61,7 +61,7 @@ public class ClientAttackController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             isAttackReady = false;
-            audioSystem.PlayOneShot(AudiolClipType.PLAYER_SHOOTING);
+            audioSystem.PlayOneShot(AudioClipType.PLAYER_SHOOTING);
             for (int i = 0; i < bulletsCount; i ++)
             {
                 var spreadedRad = rad - Random.Range(-spreadeAngle, spreadeAngle);

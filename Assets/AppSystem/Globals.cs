@@ -9,7 +9,7 @@ public static class Globals
     public const DifficultyPresetType defaultDifficulty = DifficultyPresetType.EASY;
     public const int maxFill = 1;
 
-    public enum enemyType//с маленькой буквы
+    public enum EnemyType
     {
         NORMAL = 0,
         FAST = 1,
@@ -61,7 +61,7 @@ public static class Globals
         POWER_SHOT,
     }
 
-    public enum AudiolClipType
+    public enum AudioClipType
     {
         PLAYER_SHOOTING,
         ABILITY,

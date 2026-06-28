@@ -16,21 +16,21 @@ public class EnemiesStructLib : MonoBehaviour
         }
     }
 
-    public GameObject GetEnemyObj(enemyType type)
+    public GameObject GetEnemyObj(EnemyType type)
     {
         return enemiesInfo[type].GetObj();
     }
-    public EnemyBase GetEnemyBase(enemyType type)
+    public EnemyBase GetEnemyBase(EnemyType type)
     {
         return enemiesInfo[type].GetBase();
     }
 
-    public Dictionary<enemyType, EnemyData> GetEnemiesDatas()
+    public Dictionary<EnemyType, EnemyData> GetEnemiesDatas()
     {
         return enemiesInfo;
     }
 
-    private Dictionary<enemyType, EnemyData> enemiesInfo = new Dictionary<enemyType, EnemyData>();
+    private Dictionary<EnemyType, EnemyData> enemiesInfo = new Dictionary<EnemyType, EnemyData>();
 }
 
 public class EnemyData

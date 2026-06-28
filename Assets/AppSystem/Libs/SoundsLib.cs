@@ -15,12 +15,12 @@ public class SoundsLib : MonoBehaviour
             audioDatas.Add(data.type, data.clip);
         }
     }
-    public Dictionary<AudiolClipType, AudioClip> AudioDatas
+    public Dictionary<AudioClipType, AudioClip> AudioDatas
     {
         get { return audioDatas; }
     }
 
-    public AudioClip GetAutioClip(AudiolClipType type)
+    public AudioClip GetAutioClip(AudioClipType type)
     {
         return audioDatas[type];
     }
@@ -28,10 +28,10 @@ public class SoundsLib : MonoBehaviour
     [System.Serializable]
     public class SoundData
     {
-        public AudiolClipType type;
+        public AudioClipType type;
         public AudioClip clip;
 
     }
 
-    private Dictionary<AudiolClipType, AudioClip> audioDatas = new Dictionary<AudiolClipType, AudioClip>();
+    private Dictionary<AudioClipType, AudioClip> audioDatas = new Dictionary<AudioClipType, AudioClip>();
 }

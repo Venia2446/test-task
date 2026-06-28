@@ -7,7 +7,7 @@ using static BulletsStructLib;
 using static EnemiesStatsLib;
 public class EnemyBase : MonoBehaviour
 {
-    public enemyType enemyType = enemyType.NORMAL;
+    public EnemyType enemyType = EnemyType.NORMAL;
 
     public EnemyMovementControllerBase enemyMovementController;
     public EnemyAttackControllerBase enemyAttackControllerBase;

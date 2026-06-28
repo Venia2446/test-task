@@ -57,7 +57,7 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     protected void FireAbilityActivated()
     {
-        audioSystem.PlayOneShot(Globals.AudiolClipType.PLAYER_SHOOTING);
+        audioSystem.PlayOneShot(Globals.AudioClipType.PLAYER_SHOOTING);
         OnAbilityActivated?.Invoke();
     }
 
@@ -72,7 +72,7 @@ public class ClientAbilityControllerBase : MonoBehaviour
     private IEnumerator StopCooldown(float delay)
     {
         yield return new WaitForSeconds(delay);
-        audioSystem.PlayOneShot(Globals.AudiolClipType.ABILITY);
+        audioSystem.PlayOneShot(Globals.AudioClipType.ABILITY);
         cooldown = 0;
         canActivate = true;
         isCooldownStatred = false;

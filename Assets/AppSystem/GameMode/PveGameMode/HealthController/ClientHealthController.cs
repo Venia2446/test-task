@@ -91,7 +91,7 @@ public class ClientHealthController : HealthControllerBase
     {
         base.LocalHandleOnOnReceiveDamage();
 
-        audioSystem.PlayOneShot(AudiolClipType.MELEE_HIT);
+        audioSystem.PlayOneShot(AudioClipType.MELEE_HIT);
         StopRegetArmor();
         StartCoroutine(StartArmorRegen(armorRegDelay, armorRegenRateMs / 1000));
     }

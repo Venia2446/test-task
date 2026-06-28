@@ -23,12 +23,12 @@ public class EnemyHealthController : HealthControllerBase
     {
         base.LocalHandleOnOnReceiveDamage();
 
-        audioSystem.PlayOneShot(AudiolClipType.CLIENT_HIT);
+        audioSystem.PlayOneShot(AudioClipType.CLIENT_HIT);
     }
 
     protected void Destroy()
     {
-        audioSystem.PlayOneShot(AudiolClipType.ENEMY_DEAD);
+        audioSystem.PlayOneShot(AudioClipType.ENEMY_DEAD);
 
         gameObject.GetComponent<Collider2D>().enabled = false;
 
