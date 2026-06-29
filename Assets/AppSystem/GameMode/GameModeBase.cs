@@ -25,7 +25,7 @@ public class GameModeBase : MonoBehaviour
     }
     public virtual void Init(DiffcultyPreset inDiffPreset) 
     {
-        diffPreset = inDiffPreset;
+        diffcultyPreset = inDiffPreset;
         CreateGameLibs();
         CreateGameSystems();
         appSystem.PauseManager.TryUnpaseGame();
@@ -39,10 +39,13 @@ public class GameModeBase : MonoBehaviour
 
     public DiffcultyPreset DiffcultyPreset
     {
-        get { return diffPreset;  }
+        get { return diffcultyPreset;  }
     }
     protected virtual void CreateGameLibs() { }
     protected virtual void CreateGameSystems() { }
+    
     protected AppSystemClient appSystem;
-    private DiffcultyPreset diffPreset;
+    
+    private DiffcultyPreset diffcultyPreset;
+
 }

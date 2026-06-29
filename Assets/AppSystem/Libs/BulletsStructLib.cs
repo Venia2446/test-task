@@ -15,8 +15,6 @@ public class BulletsStructLib : MonoBehaviour
             bulletsStructs.Add(data.type, data);
         }
     }
-
-    private Dictionary<BulletType, BulletStruct> bulletsStructs = new Dictionary<BulletType, BulletStruct>();
     
     public BulletStruct GetBulletStruct(BulletType type)
     {
@@ -52,4 +50,6 @@ public class BulletsStructLib : MonoBehaviour
         public string collisionTag;
         public BulletAction action = BulletAction.DESTROY;
     }
+
+    private Dictionary<BulletType, BulletStruct> bulletsStructs = new Dictionary<BulletType, BulletStruct>();
 }

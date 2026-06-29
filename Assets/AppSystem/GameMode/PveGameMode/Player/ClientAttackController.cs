@@ -98,6 +98,6 @@ public class ClientAttackController : MonoBehaviour
     private AudioSystem audioSystem;
 
     private float clientDamage;
-    private bool isAttackReady = false;
+    private bool isAttackReady;
 
 }

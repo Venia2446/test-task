@@ -5,7 +5,6 @@ using static DifficultyPresetsLib;
 
 public class ScoreManager : MonoBehaviour
 {
-
     public delegate void HandleOnScoreUpdated(float score);
     public event HandleOnScoreUpdated OnscoreUpdated;
 
@@ -32,6 +31,8 @@ public class ScoreManager : MonoBehaviour
         set { scoreMultiplicator = value; }
         get { return scoreMultiplicator; }
     }
-    protected float score;
-    protected float scoreMultiplicator;
+
+    private float score;
+    private float scoreMultiplicator;
+
 }

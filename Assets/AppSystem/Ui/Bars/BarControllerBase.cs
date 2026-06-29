@@ -56,13 +56,13 @@ public class BarControllerBase : MonoBehaviour
 
     protected virtual void SetLerpRange() { }
 
-    private GameEvents gameEvents;
+    protected PlayerController playerController;
+    protected AppSystemClient appSystem;
+    protected Image image;
 
     protected float minValue;
     protected float maxValue;
 
-    protected PlayerController playerController;
-    protected AppSystemClient appSystem;
-    protected Image image;
+    private GameEvents gameEvents;
 
 }

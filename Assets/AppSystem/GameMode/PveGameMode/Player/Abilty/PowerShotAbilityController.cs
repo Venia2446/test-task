@@ -15,7 +15,6 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
     {
         base.Init(inAbility);
 
-
         var gameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
         clientAttackController = gameMode.playerController.clientAttackController;
         bulletStruct = gameMode.bulletsStructLib.GetBulletStruct(Globals.BulletType.POWER_SHOT);
@@ -94,10 +93,11 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
         get { return charge; }
     }
 
-    private float charge;
-    private bool isCharging;
     private BulletStruct bulletStruct;
     private ClientAttackController clientAttackController;
     private ChargedAbilityData castedData;
+
+    private float charge;
+    private bool isCharging;
 
 }

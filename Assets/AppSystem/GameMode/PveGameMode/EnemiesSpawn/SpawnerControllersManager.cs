@@ -11,7 +11,6 @@ public class SpawnerControllersManager : MonoBehaviour
     public void Init(DiffcultyPreset inPreset, EnemiesStructLib enemiesStructLib, PlayerController playerController)
     {
         target = playerController.player;
-        diffPreset = inPreset;
         enemyDatas = enemiesStructLib.GetEnemiesDatas();
 
         foreach (var spawner in spawners)
@@ -50,9 +49,7 @@ public class SpawnerControllersManager : MonoBehaviour
         spawnerControllers[rdnSpawnerIdx].SpawnEnemy(enemyDatas[rdnEnemyType], target);
     }
 
-    private List<EnemyMovementControllerBase> enemiesControllers = new List<EnemyMovementControllerBase>();
     private List<EnemySpawnController> spawnerControllers = new List<EnemySpawnController>();
-    private DiffcultyPreset diffPreset;
     private Dictionary<EnemyType, EnemyData> enemyDatas;
     private GameObject target;
 

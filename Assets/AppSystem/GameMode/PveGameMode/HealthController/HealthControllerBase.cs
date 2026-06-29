@@ -44,7 +44,6 @@ public class HealthControllerBase : MonoBehaviour
     {
         if (IsDead)
         {
-            IsDead = true;
             return IsDead;
         }
 
@@ -103,9 +102,10 @@ public class HealthControllerBase : MonoBehaviour
         get { return minHealth; }
     }
 
+    protected const float minHealth = 0;
+
     protected bool isDead;
     protected float health;
-    protected const float minHealth = 0;
     protected float maxHealth;
 
     protected AudioSystem audioSystem;

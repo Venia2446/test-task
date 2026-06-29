@@ -30,12 +30,12 @@ public class TooltipController : MonoBehaviour
         tooltipPrefab.SetActive(false);
     }
 
-    void UpdatePresetText(string inText)
+    private void UpdatePresetText(string inText)
     {
         text.SetText(inText);
     }
 
-    void Update()
+    private void Update()
     {
         if (tooltipPrefab.activeSelf)
         {
@@ -49,6 +49,6 @@ public class TooltipController : MonoBehaviour
         }
     }
 
-    private Camera  camera;
+    private Camera camera;
     private Vector2 shift;
 }

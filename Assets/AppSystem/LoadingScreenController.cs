@@ -25,7 +25,7 @@ public class LoadingScreenController : MonoBehaviour
         isLoadingScreenStarted = true;
 
         progress = 0;
-        text.text = UI_LOADING + sceneUid;
+        text.text = string.Format(UI_LOADING, sceneUid);
 
         OnProgressUpdated?.Invoke(0);
         lodingScreen.SetActive(true);
@@ -82,8 +82,10 @@ public class LoadingScreenController : MonoBehaviour
         get { return isLoadingScreenStarted;  }
     }
 
+    private const string UI_LOADING = "LOADING: {0}";
+    private const float preloadProgress = 0.9f;
+
     private bool isLoadingScreenStarted;
     private float progress;
-    const string UI_LOADING = "LOADING: ";
-    const float preloadProgress = 0.9f;
+
 }

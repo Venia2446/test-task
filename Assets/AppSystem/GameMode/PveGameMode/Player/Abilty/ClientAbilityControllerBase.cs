@@ -20,7 +20,6 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     public virtual void Init(Ability inAbility)
     {
-
         audioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
 
         ability = inAbility;
@@ -40,7 +39,7 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     public virtual void TryActivate()
     {
-        if (!CanAtivate)
+        if (!CanActivate)
         {
             return;
         }
@@ -99,7 +98,7 @@ public class ClientAbilityControllerBase : MonoBehaviour
         return data;
     }
 
-    public bool CanAtivate
+    public bool CanActivate
     {
         get {return canActivate; }
     }
@@ -109,13 +108,14 @@ public class ClientAbilityControllerBase : MonoBehaviour
         get { return cooldown; }
     }
 
-    protected bool isCooldownStatred;
-    protected bool canActivate;
     protected Ability ability;
     protected AbilityDataBase data;
-    
-    private float cooldown;
+
+    protected bool isCooldownStatred;
+    protected bool canActivate;
 
     private AudioSystem audioSystem;
+
+    private float cooldown;
     
 }
