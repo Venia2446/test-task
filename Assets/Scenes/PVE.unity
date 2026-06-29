@@ -1267,10 +1267,10 @@ GameObject:
   - component: {fileID: 821799757}
   - component: {fileID: 821799756}
   - component: {fileID: 821799755}
-  - component: {fileID: 821799749}
   - component: {fileID: 821799758}
   - component: {fileID: 821799759}
   - component: {fileID: 821799760}
+  - component: {fileID: 821799749}
   m_Layer: 0
   m_Name: GameModePve
   m_TagString: Untagged
@@ -1391,12 +1391,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 821799742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c15b8da9b0c27a45a68b6ed712f13f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ba7578704b04564abd96aaf7f7e6892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hideDelaySec: 0.2
   hitEffect: {fileID: 4366722582576920234}
   deathEffect: {fileID: 0}
+  normalState: {fileID: 4366722582576920235}
 --- !u!114 &821799750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8345,6 +8346,11 @@ Transform:
 --- !u!1 &4366722582576920234 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3999321708727065826, guid: 2b971e90b847c884b87fc2eb11795afc, type: 3}
+  m_PrefabInstance: {fileID: 4366722582576920231}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4366722582576920235 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4366722583326047277, guid: 2b971e90b847c884b87fc2eb11795afc, type: 3}
   m_PrefabInstance: {fileID: 4366722582576920231}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7943227135084417018

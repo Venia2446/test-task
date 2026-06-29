@@ -8,9 +8,9 @@ public class EnemySpawnController : MonoBehaviour
 
     public void SpawnEnemy(EnemyData inEnemyData, GameObject target)
     {
-        var obj = Instantiate(inEnemyData.GetObj(), spawnerTransform);
+        var obj = Instantiate(inEnemyData.GameObj, spawnerTransform);
         obj.SetActive(true);
-        obj.GetComponent<EnemyBase>().Init(target);
+        obj.GetComponent<EnemyManagerBase>().Init(target);
     }
 
 }

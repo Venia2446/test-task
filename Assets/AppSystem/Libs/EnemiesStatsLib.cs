@@ -5,13 +5,13 @@ using static Globals;
 
 public class EnemiesStatsLib : MonoBehaviour
 {
-    [SerializeField] public EnemyStatsPreset[] enemyPresets;
+    public EnemyStatsPreset[] enemyPresets;
 
     public void Init()
     {
         foreach (var preset in enemyPresets)
         {
-            enemiesStatsPresets.Add(preset.enemyType, preset);
+            enemiesStatsPresets.Add(preset.EnemyType, preset);
         }
     }
 
@@ -21,17 +21,17 @@ public class EnemiesStatsLib : MonoBehaviour
     }
 
     [System.Serializable]
-    public struct EnemyStatsPreset
+    public class EnemyStatsPreset
     {
-        public EnemyType enemyType;
-        public float hp;
-        public float speed;
-        public float maxSpeed;
-        public float keepDistance;
-        public float damage;
-        public float acceleration;
-        public float attackFrequency;
-        public float scoreValue;
+        public EnemyType EnemyType { get; set; }
+        public float Hp { get; set; }
+        public float Speed { get; set; }
+        public float MaxSpeed { get; set; }
+        public float KeepDistance { get; set; }
+        public float Damage { get; set; }
+        public float Acceleration { get; set; }
+        public float AttackFrequency { get; set; }
+        public float ScoreValue { get; set; }
     }
 
     private Dictionary<EnemyType, EnemyStatsPreset> enemiesStatsPresets = new Dictionary<EnemyType, EnemyStatsPreset>();

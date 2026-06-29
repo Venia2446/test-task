@@ -1,4 +1,6 @@
 public class EnemyBulletData : BulletDataBase
 {
-    public ClientHealthController clientHealthController;
+
+    public ClientHealthController ClientHealthController { get; set; }
+
 }

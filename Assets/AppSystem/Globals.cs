@@ -69,10 +69,6 @@ public static class Globals
         RANGE_HIT,
         CLIENT_HIT,
         ENEMY_DEAD,
-
     }
-
-
-
 
 }

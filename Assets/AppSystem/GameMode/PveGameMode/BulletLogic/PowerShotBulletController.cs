@@ -12,7 +12,7 @@ public class PowerShotBulletController : ClientBulletController
         base.Init(bulletData);
 
         var castedData = (PowerShotBulletData)bulletData;
-        var newScale = castedData.charge / scale;
+        var newScale = castedData.Charge / scale;
         gameObject.GetComponent<Transform>().localScale += new Vector3(newScale, newScale, newScale);
     }
 

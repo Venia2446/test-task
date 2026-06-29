@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class PowerShotBulletData : BulletDataBase
 {
-    public float charge;
+
+    public float Charge { get; set; }
+
 }

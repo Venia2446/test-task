@@ -23,7 +23,7 @@ public class EnemyMeleeAttackController : EnemyAttackControllerBase
     {
         base.Attack();
 
-        clientHealthController.RegisterTakingDamage(damage);
+        ClientHealthController.RegisterTakingDamage(Damage);
     }
 
     private bool IsAttackCollided(Collision2D collision)

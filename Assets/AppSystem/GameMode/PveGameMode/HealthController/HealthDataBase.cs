@@ -1,4 +1,6 @@
 public class HealthDataBase 
 {
-    public float maxHealth;
+    public float MaxHealth { get; set; }
+
+
 }

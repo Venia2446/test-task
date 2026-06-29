@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HitEffectController : MonoBehaviour
+public class DamageEffectController : MonoBehaviour
 {
     public float hideDelaySec = 0.2f; 
     public GameObject hitEffect;
     public SpriteRenderer deathEffect;
+    public SpriteRenderer normalState;
 
     private void OnDestroy()
     {
@@ -33,7 +34,7 @@ public class HitEffectController : MonoBehaviour
     private IEnumerator StartDeathEffect(float fadetime)
     {
         hitEffect.SetActive(false);
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        normalState.enabled = false;
         deathEffect.enabled = true;
 
         var color = deathEffect.color;
@@ -56,4 +57,5 @@ public class HitEffectController : MonoBehaviour
     }
 
     private bool isHitShown;
+
 }

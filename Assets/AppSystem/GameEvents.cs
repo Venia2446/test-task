@@ -59,10 +59,7 @@ public class GameEvents
         OnGameEnded.Invoke();
       
     }
-   public bool IsGameReady()
-    {
-        return isGameReady;
-    }
 
-    private bool isGameReady;
+    public bool isGameReady { get; private set; }
+
 }

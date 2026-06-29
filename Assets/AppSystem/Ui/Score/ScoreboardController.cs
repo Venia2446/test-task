@@ -17,21 +17,22 @@ public class ScoreboardController : MonoBehaviour
     private void Init()
     {
         var gameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
-        diffType = gameMode.DiffcultyPreset.type.ToString();
+        diffType = gameMode.DiffcultyPreset.Type.ToString();
         scoreManager = gameMode.scoreManager;
-        multiplicator = scoreManager.Multiplicator;
+        multiplicator = scoreManager.ScoreMultiplicator;
         scoreManager.OnscoreUpdated += HandleOnScoreUpdated;
         HandleOnScoreUpdated(scoreManager.Score);
     }
 
     private void Terminate()
     {
+        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
         scoreManager.OnscoreUpdated -= HandleOnScoreUpdated;
     }
 
     private void OnDestroy()
     {
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
+
         Terminate();
     }
 

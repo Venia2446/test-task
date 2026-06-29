@@ -6,13 +6,13 @@ using static Globals;
 public class AbilitiesLib : MonoBehaviour
 {
 
-    [SerializeField] public Ability[] abilities;
+    public Ability[] abilities;
 
     public void Init()
     {
         foreach (var ability in abilities)
         {
-            abilityStuctures.Add(ability.type, ability);
+            abilityStuctures.Add(ability.Type, ability);
         }
     }
 
@@ -26,14 +26,17 @@ public class AbilitiesLib : MonoBehaviour
         return abilityStuctures[type];
     }
 
-    [System.Serializable]
-    public class Ability
-    {
-        public AbilityType type;
-        public ClientAbilityControllerBase controller;
-        public AbilityDataBase data;
-    }
-
     private Dictionary<AbilityType, Ability> abilityStuctures = new Dictionary<AbilityType, Ability>();
 
 }
+
+[System.Serializable]
+public class Ability
+{
+
+    public AbilityType Type { get; set; }
+    public ClientAbilityControllerBase Controller { get; set; }
+    public AbilityDataBase Data { get; set; }
+
+}
+

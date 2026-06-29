@@ -6,19 +6,19 @@ using static DifficultyPresetsLib;
 
 public class SpawnerControllersManager : MonoBehaviour
 {
-    [SerializeField] public GameObject[] spawners;
+    public GameObject[] spawners;
 
     public void Init(DiffcultyPreset inPreset, EnemiesStructLib enemiesStructLib, PlayerController playerController)
     {
-        target = playerController.player;
-        enemyDatas = enemiesStructLib.GetEnemiesDatas();
+        Target = playerController.player;
+        EnemyDatas = enemiesStructLib.GetEnemiesDatas();
 
         foreach (var spawner in spawners)
         {
             spawnerControllers.Add(spawner.GetComponent<EnemySpawnController>());
         }
 
-        StartCoroutine(StartSpawnLogic(inPreset.enemySpawnRateSec));
+        StartCoroutine(StartSpawnLogic(inPreset.EnemySpawnRateSec));
     }
 
     public void Terminate()
@@ -46,11 +46,12 @@ public class SpawnerControllersManager : MonoBehaviour
     {
         var rdnSpawnerIdx = Random.Range(0, spawnerControllers.Count - 1);
         var rdnEnemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
-        spawnerControllers[rdnSpawnerIdx].SpawnEnemy(enemyDatas[rdnEnemyType], target);
+        spawnerControllers[rdnSpawnerIdx].SpawnEnemy(EnemyDatas[rdnEnemyType], Target);
     }
 
     private List<EnemySpawnController> spawnerControllers = new List<EnemySpawnController>();
-    private Dictionary<EnemyType, EnemyData> enemyDatas;
-    private GameObject target;
+
+    private Dictionary<EnemyType, EnemyData> EnemyDatas { get; set; }
+    private GameObject Target { get; set; }
 
 }

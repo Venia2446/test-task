@@ -18,16 +18,16 @@ public class ClientAttackController : MonoBehaviour
 
     public void Init(DiffcultyPreset preset, BulletsStructLib bulletStructLib, AudioSystem inAudioSystem)
     {
-        audioSystem = inAudioSystem;
-        bulletStruct = bulletStructLib.GetBulletStruct(BulletType.SMALL);
-        clientDamage = preset.clientDamage;
-        camera = Camera.main;
-        isAttackReady = true;
+        AudioSystem = inAudioSystem;
+        BulletStruct = bulletStructLib.GetBulletStruct(BulletType.SMALL);
+        ClientDamage = preset.ClientDamage;
+        Camera = Camera.main;
+        IsAttackReady = true;
     }
 
     public void Terminate()
     {
-        isAttackReady = false;
+        IsAttackReady = false;
         StopAllCoroutines();
     }
 
@@ -35,6 +35,7 @@ public class ClientAttackController : MonoBehaviour
     {
         Terminate();
     }
+
     public Quaternion GetAngleToMouseTarget()
     {
         return Quaternion.Euler(0f, 0f, GetRadToMouseTarget());
@@ -43,7 +44,7 @@ public class ClientAttackController : MonoBehaviour
     public float GetRadToMouseTarget()
     {
         var objPos = gunTransform.position;
-        var worldMousePos = camera.ScreenToWorldPoint(Input.mousePosition);
+        var worldMousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
         return Utils.CalculateRotationAngleRad(worldMousePos, objPos);
     }
 
@@ -53,20 +54,20 @@ public class ClientAttackController : MonoBehaviour
         var angle = Quaternion.Euler(0f, 0f, rad);
         gunTransform.rotation = angle;
         
-        if (!isAttackReady)
+        if (!IsAttackReady)
         {
             return;
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            isAttackReady = false;
-            audioSystem.PlayOneShot(AudioClipType.PLAYER_SHOOTING);
+            IsAttackReady = false;
+            AudioSystem.PlayOneShot(AudioClipType.PLAYER_SHOOTING);
             for (int i = 0; i < bulletsCount; i ++)
             {
                 var spreadedRad = rad - Random.Range(-spreadeAngle, spreadeAngle);
                 var spreadedAngle = Quaternion.Euler(0f, 0f, spreadedRad);
-                StartCoroutine(BuildBullet(bulletStruct, spawnerTransform.position, spreadedAngle));
+                StartCoroutine(BuildBullet(BulletStruct, spawnerTransform.position, spreadedAngle));
             }
 
             StartCoroutine(ResetAttackReadyFlag(shootingDelay));
@@ -75,11 +76,11 @@ public class ClientAttackController : MonoBehaviour
 
     private IEnumerator BuildBullet(BulletStruct bulletStructure, Vector3 position, Quaternion angle)
     {
-        var obj = Instantiate(bulletStructure.stuct, position, angle);
+        var obj = Instantiate(bulletStructure.gameObj, position, angle);
         var bulletData = new BulletDataBase();
-        bulletData.angle = angle;
-        bulletData.damage = clientDamage;
-        bulletData.bulletStruct = bulletStruct;
+        bulletData.Angle = angle;
+        bulletData.Damage = ClientDamage;
+        bulletData.BulletStruct = BulletStruct;
 
         var bulletContr = obj.GetComponent<ClientBulletController>();
         bulletContr.Init(bulletData);
@@ -90,14 +91,13 @@ public class ClientAttackController : MonoBehaviour
     private IEnumerator ResetAttackReadyFlag(float delay)
     {
         yield return new WaitForSeconds(delay);
-        isAttackReady = true;
+        IsAttackReady = true;
     }
 
-    private BulletStruct bulletStruct;
-    private Camera camera;
-    private AudioSystem audioSystem;
-
-    private float clientDamage;
-    private bool isAttackReady;
+    private BulletStruct BulletStruct { get; set; }
+    private Camera Camera { get; set; }
+    private AudioSystem AudioSystem { get; set; }
+    private float ClientDamage { get; set; }
+    private bool IsAttackReady { get; set; }
 
 }

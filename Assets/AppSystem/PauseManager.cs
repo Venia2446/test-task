@@ -2,23 +2,29 @@ using UnityEngine;
 
 public class PauseManager
 {
+
     public void TryPauseGame()
     {
-        if (Time.timeScale == 0f)
+        if (IsPaused)
         {
             return;
         }
 
+        IsPaused = true;
         Time.timeScale = 0f;
     }
 
     public void TryUnpaseGame() 
     {
-        if (Time.timeScale == 1f)
+        if (!IsPaused)
         {
             return;
         }
 
+        IsPaused = false;
         Time.timeScale = 1f;
     }
+
+    private bool IsPaused { get; set; }
+
 }

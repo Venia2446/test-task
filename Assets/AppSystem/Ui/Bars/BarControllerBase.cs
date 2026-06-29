@@ -23,12 +23,13 @@ public class BarControllerBase : MonoBehaviour
 
     public void Terminate()
     {
+        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
         Unsubscribe();
     }
 
     private void OnDestroy()
     {
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
+
         Terminate();
     }
 

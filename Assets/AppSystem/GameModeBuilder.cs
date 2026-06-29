@@ -8,28 +8,27 @@ public class GameModeBuilder
         difficultyPresetsLib = presetsLib;
     }
 
-    public void CreateGameModeParams()
+    public void Init()
     {
-        gameModeParams = new GameModeParams();
+        GameModeParams = new GameModeParams();
     }
 
     public void SetGameModeStartParams(DifficultyPresetType type)
     {
-        gameModeParams.diffPreset = difficultyPresetsLib.GetPreset(type);
+        GameModeParams.DiffPreset = difficultyPresetsLib.GetPreset(type);
     }
 
     public void BuildGameMode(GameModeBase gameMode)
     {
-
-        gameMode.Init(gameModeParams.diffPreset);
+        gameMode.Init(GameModeParams);
     }
 
-    protected struct GameModeParams
-    {
-        public DiffcultyPreset diffPreset;
-    }
+    private GameModeParams GameModeParams { get; set; }
+    private DifficultyPresetsLib difficultyPresetsLib { get; set; }
 
-    protected GameModeParams gameModeParams;
-    protected DifficultyPresetsLib difficultyPresetsLib;
+}
 
+public class GameModeParams
+{
+    public DiffcultyPreset DiffPreset { get; set; }
 }

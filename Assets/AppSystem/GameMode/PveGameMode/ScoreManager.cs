@@ -10,29 +10,17 @@ public class ScoreManager : MonoBehaviour
 
     public void Init(DiffcultyPreset preset)
     {
-        Multiplicator = preset.scoreMultiplicator;
+        ScoreMultiplicator = preset.ScoreMultiplicator;
     }
 
     public void IncreaseScore(float value)
     {
-        value *= Multiplicator;
-        score += value;
-        OnscoreUpdated?.Invoke(score);
+        value *= ScoreMultiplicator;
+        Score += value;
+        OnscoreUpdated?.Invoke(Score);
     }
 
-    public float Score
-    {
-        set { score = value; }
-        get { return score; }
-    }
-
-    public float Multiplicator
-    {
-        set { scoreMultiplicator = value; }
-        get { return scoreMultiplicator; }
-    }
-
-    private float score;
-    private float scoreMultiplicator;
+    public float Score { get; private set; }
+    public float ScoreMultiplicator { get; private set; }
 
 }

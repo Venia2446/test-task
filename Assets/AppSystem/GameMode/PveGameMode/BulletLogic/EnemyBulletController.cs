@@ -9,15 +9,16 @@ public class EnemyBulletController : BulletControllerBase
         base.Init(bulletData);
 
         var castedData = (EnemyBulletData)bulletData;
-        clientHealthController = castedData.clientHealthController;
+        ClientHealthController = castedData.ClientHealthController;
     }
 
     protected override void RegisterDamage(Collider2D collision)
     {
         base.RegisterDamage(collision);
 
-        clientHealthController.RegisterTakingDamage(damage);
+        ClientHealthController.RegisterTakingDamage(Damage);
     }
 
-    private ClientHealthController clientHealthController;
+    private ClientHealthController ClientHealthController { get; set; }
+
 }

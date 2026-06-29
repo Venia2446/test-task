@@ -15,9 +15,9 @@ public class PveGameMode : GameModeBase
 
     public AudioSystem audioSystem;
 
-    protected override void CreateGameLibs()
+    protected override void InitGameLibs()
     {
-        base.CreateGameLibs();
+        base.InitGameLibs();
 
         enemiesStructLib.Init();
         bulletsStructLib.Init();
@@ -25,9 +25,9 @@ public class PveGameMode : GameModeBase
         soundsLib.Init();
     }
 
-    protected override void CreateGameSystems()
+    protected override void InitGameSystems()
     {
-        base.CreateGameSystems();
+        base.InitGameSystems();
 
         audioSystem.Init(soundsLib);
         scoreManager.Init(DiffcultyPreset);

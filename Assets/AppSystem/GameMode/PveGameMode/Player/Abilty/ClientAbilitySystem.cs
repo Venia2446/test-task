@@ -8,26 +8,26 @@ public class ClientAbilitySystem : MonoBehaviour
 {
     public void Init(AbilitiesLib abilitiesLib)
     {
-        abilities = abilitiesLib.Abilities;
-        foreach (var ability in abilities)
+        Abilities = abilitiesLib.Abilities;
+        foreach (var ability in Abilities)
         {
-            ability.Value.controller.Init(ability.Value);
+            ability.Value.Controller.Init(ability.Value);
         }
     }
 
     public void Terminate()
     {
-        foreach (var ability in abilities)
+        foreach (var ability in Abilities)
         {
-            ability.Value.controller?.Terminate();
+            ability.Value.Controller?.Terminate();
         }
     }
 
     public Ability GetAbility(AbilityType type)
     {
-        return abilities[type];
+        return Abilities[type];
     }
 
-    private Dictionary<AbilityType, Ability> abilities;
+    private Dictionary<AbilityType, Ability> Abilities { get; set; }
     
 }

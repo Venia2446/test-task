@@ -14,8 +14,8 @@ public class GameModeBase : MonoBehaviour
 
     private void Awake()
     {
-        appSystem = AppSystemClient.Instance;
-        appSystem.GameMode = this;
+        AppSystem = AppSystemClient.Instance;
+        AppSystem.GameMode = this;
     }
 
     private void OnDestroy()
@@ -23,29 +23,23 @@ public class GameModeBase : MonoBehaviour
         Terminate();
         OnGameEnded?.Invoke();
     }
-    public virtual void Init(DiffcultyPreset inDiffPreset) 
+    public virtual void Init(GameModeParams inParams) 
     {
-        diffcultyPreset = inDiffPreset;
-        CreateGameLibs();
-        CreateGameSystems();
-        appSystem.PauseManager.TryUnpaseGame();
+        DiffcultyPreset = inParams.DiffPreset;
+        InitGameLibs();
+        InitGameSystems();
         OnGameReady?.Invoke();
     }
 
     protected virtual void Terminate()
     {
-        appSystem.GameMode = null;
+        AppSystem.GameMode = null;
     }
 
-    public DiffcultyPreset DiffcultyPreset
-    {
-        get { return diffcultyPreset;  }
-    }
-    protected virtual void CreateGameLibs() { }
-    protected virtual void CreateGameSystems() { }
-    
-    protected AppSystemClient appSystem;
-    
-    private DiffcultyPreset diffcultyPreset;
+    protected virtual void InitGameLibs() { }
+    protected virtual void InitGameSystems() { }
+
+    public DiffcultyPreset DiffcultyPreset { get; protected set; }
+    protected AppSystemClient AppSystem { get; set; }
 
 }

@@ -8,15 +8,14 @@ public class ClientMovementController : MonoBehaviour
 
     public void Init(GameObject player)
     {
-        rigidbody = player.GetComponent<Rigidbody2D>();
+        Rigidbody = player.GetComponent<Rigidbody2D>();
     }
-
-    public void Terminate() { }
 
     private void Update()
     {
-        rigidbody.velocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
+        Rigidbody.velocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
     }
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D Rigidbody { get; set; }
+
 }

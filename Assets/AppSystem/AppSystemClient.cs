@@ -18,17 +18,18 @@ public class AppSystemClient : MonoBehaviour
     {
         Instance = this;
 
-        BuildLibs();
+        InitLibs();
         BuildGlobalSystems();
+        InitGlobalSystems();
 
-        isCreated = true;
-
+        IsCreated = true;
         OnCreated?.Invoke();
+
         loadingScreenController.LoadScene(SceneType.TITLE.ToString());
         DontDestroyOnLoad(this);
     }
 
-    private void BuildLibs()
+    private void InitLibs()
     {
         diffLib.Init();
         enemyStatsLib.Init();
@@ -36,44 +37,37 @@ public class AppSystemClient : MonoBehaviour
 
     private void BuildGlobalSystems()
     {
-        gameEvents = new GameEvents();
-        pauseManager = new PauseManager();
-        gameModeBuider = new GameModeBuilder(diffLib);
-        gameModeBuider.CreateGameModeParams();
+        GameEvents = new GameEvents();
+        PauseManager = new PauseManager();
+        GameModeBuider = new GameModeBuilder(diffLib);
+    }
+
+    private void InitGlobalSystems()
+    {
+        GameModeBuider.Init();
     }
 
     public void SubscribeGameMode(GameModeBase inGameMode)
     {
-        activeGameMode = inGameMode;
-        activeGameMode.OnGameReady += FireGameReady;
-        activeGameMode.OnGameEnded += FireGameEnded;
-        gameModeBuider.BuildGameMode(activeGameMode);
-
+        ActiveGameMode = inGameMode;
+        ActiveGameMode.OnGameReady += FireGameReady;
+        ActiveGameMode.OnGameEnded += FireGameEnded;
+        GameModeBuider.BuildGameMode(ActiveGameMode);
     }
     public void UnsubsribeGameMode()
     {
-        if (activeGameMode == null)
+        if (ActiveGameMode == null)
         {
             return;
         }
 
-        activeGameMode.OnGameReady -= FireGameReady;
-        activeGameMode.OnGameEnded -= FireGameEnded;
+        ActiveGameMode.OnGameReady -= FireGameReady;
+        ActiveGameMode.OnGameEnded -= FireGameEnded;
     }
 
     public void SetDifficulty(DifficultyPresetType type)
     {
-        gameModeBuider.SetGameModeStartParams(type);
-    }
-
-    public bool IsCreated
-    {
-        get { return isCreated; }
-    }
-
-    public PauseManager PauseManager
-    {
-        get { return pauseManager; }
+        GameModeBuider.SetGameModeStartParams(type);
     }
 
     public GameModeBase GameMode
@@ -89,25 +83,25 @@ public class AppSystemClient : MonoBehaviour
                 SubscribeGameMode(value);
             }
         }
-        get { return activeGameMode; }
+        get { return ActiveGameMode; }
     }
 
     private void FireGameReady()
     {
-        gameEvents.GameReady();
+        GameEvents.GameReady();
     }
 
     private void FireGameEnded()
     {
-        gameModeBuider.CreateGameModeParams();
-        gameEvents.GameEnded();
+        GameModeBuider.Init();
+        GameEvents.GameEnded();
     }
 
-    private GameModeBase activeGameMode;
-    private PauseManager pauseManager;
-    private GameEvents gameEvents;
-    private GameModeBuilder gameModeBuider;
+    public bool IsCreated { get; private set; }
+    public PauseManager PauseManager { get; private set; }
 
-    private bool isCreated;
+    private GameModeBase ActiveGameMode { get; set; }
+    private GameEvents GameEvents { get; set; }
+    private GameModeBuilder GameModeBuider { get; set; }
 
 }

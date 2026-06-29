@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
     public void Terminate()
     {
         clientAbilitySystem.Terminate();
-        clientMovementController.Terminate();
         clientHealthController.Terminate();
         clientAttackController.Terminate();
     }
@@ -33,11 +32,11 @@ public class PlayerController : MonoBehaviour
     {
         var healtData = new ClientHealthData();
 
-        healtData.maxHealth        = diffPreset.clientMaxHealth;
-        healtData.maxArmor         = diffPreset.clienMaxArmor;
-        healtData.armorRegenValue  = diffPreset.clientArmorRegenValue;
-        healtData.armorRegenRateMs = diffPreset.clientArmorRegenRateMs;
-        healtData.armorRegDelay    = diffPreset.armorRegenDelay;
+        healtData.MaxHealth        = diffPreset.ClientMaxHealth;
+        healtData.MaxArmor         = diffPreset.ClienMaxArmor;
+        healtData.ArmorRegenValue  = diffPreset.ClientArmorRegenValue;
+        healtData.ArmorRegenRateMs = diffPreset.ClientArmorRegenRateMs;
+        healtData.ArmorRegenDelay  = diffPreset.ArmorRegenDelay;
         return healtData;
     }
 }

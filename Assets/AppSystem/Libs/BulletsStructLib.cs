@@ -5,14 +5,14 @@ using static Globals;
 
 public class BulletsStructLib : MonoBehaviour
 {
-    [SerializeField] public BulletStruct[] bulletsStructsRaw;
+    public BulletStruct[] bulletsStructsRaw;
 
     public void Init()
     {
         foreach (var data in bulletsStructsRaw)
         {
             data.CreateTriggersData();
-            bulletsStructs.Add(data.type, data);
+            bulletsStructs.Add(data.Type, data);
         }
     }
     
@@ -21,35 +21,39 @@ public class BulletsStructLib : MonoBehaviour
         return bulletsStructs[type];
     }
 
-    [System.Serializable]
-    public class BulletStruct
-    {
-        public BulletType type;
-        public GameObject stuct;
-        [SerializeField] public BulleTTrigger[] bulleTTriggersRaw;
-
-        public BulletAction GetTriggerAction(string tag)
-        {
-            return (triggers.TryGetValue(tag, out BulletAction action)) ? action : BulletAction.NONE;
-        }
-
-        public void CreateTriggersData()
-        {
-            foreach (var tirggetData in bulleTTriggersRaw)
-            {
-                triggers.Add(tirggetData.collisionTag, tirggetData.action);
-            }
-        }
-
-        private Dictionary<string, BulletAction> triggers = new Dictionary<string, BulletAction>();
-    }
-
-    [System.Serializable]
-    public class BulleTTrigger
-    {
-        public string collisionTag;
-        public BulletAction action = BulletAction.DESTROY;
-    }
-
     private Dictionary<BulletType, BulletStruct> bulletsStructs = new Dictionary<BulletType, BulletStruct>();
+
+}
+
+[System.Serializable]
+public class BulletStruct
+{
+    public BulletType Type { get; set; }
+    public GameObject gameObj { get; set; }
+    public BulleTTrigger[] bulleTTriggersRaw;
+
+    public BulletAction GetTriggerAction(string tag)
+    {
+        return (triggers.TryGetValue(tag, out BulletAction action)) ? action : BulletAction.NONE;
+    }
+
+    public void CreateTriggersData()
+    {
+        foreach (var tirggetData in bulleTTriggersRaw)
+        {
+            triggers.Add(tirggetData.CollisionTag, tirggetData.Action);
+        }
+    }
+
+    private Dictionary<string, BulletAction> triggers = new Dictionary<string, BulletAction>();
+
+}
+
+[System.Serializable]
+public class BulleTTrigger
+{
+
+    public string CollisionTag { get; set; }
+    public BulletAction Action { get; set; } = BulletAction.DESTROY;
+
 }

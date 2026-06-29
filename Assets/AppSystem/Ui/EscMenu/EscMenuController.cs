@@ -16,7 +16,7 @@ public class EscMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
+
         Terminate();
     }
 
@@ -24,14 +24,22 @@ public class EscMenuController : MonoBehaviour
     {
         clientHealthController = ((PveGameMode)appSystemClient.GameMode).playerController.clientHealthController;
         clientHealthController.OnDeath += OpenMainMenu;
+        isInited = true;
     }
 
     private void Terminate()
     {
+        isInited = false;
+        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
         clientHealthController.OnDeath -= OpenMainMenu;
     }
     private void Update()
     {
+        if (!isInited)
+        {
+            return;
+        }
+
         if (clientHealthController.IsDead)
         {
             return;
@@ -63,6 +71,7 @@ public class EscMenuController : MonoBehaviour
         isMainMenuEnabled = false;
     }
 
+    private bool isInited;
     private PauseManager pauseManager;
     private bool isMainMenuEnabled;
     private GameEvents gameEvents;

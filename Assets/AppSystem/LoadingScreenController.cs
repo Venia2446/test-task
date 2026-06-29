@@ -22,9 +22,9 @@ public class LoadingScreenController : MonoBehaviour
 
     public void LoadScene(string sceneUid)
     {
-        isLoadingScreenStarted = true;
+        IsLoadingScreenStarted = true;
 
-        progress = 0;
+        Pogress = 0;
         text.text = string.Format(UI_LOADING, sceneUid);
 
         OnProgressUpdated?.Invoke(0);
@@ -50,7 +50,7 @@ public class LoadingScreenController : MonoBehaviour
 
         UpdateProgress(loading);
         yield return new WaitForSecondsRealtime(3); // ONLY TO TEST TASK TO HOLD LOADING LONGER
-        isLoadingScreenStarted = false;
+        IsLoadingScreenStarted = false;
         loading.allowSceneActivation = true;
         lodingScreen.SetActive(false);
         OnStopped?.Invoke();
@@ -58,7 +58,7 @@ public class LoadingScreenController : MonoBehaviour
 
     private IEnumerator RotateImage()
     {
-        while (isLoadingScreenStarted)
+        while (IsLoadingScreenStarted)
         {
             imageTransform.Rotate(0, 0, -0.5f);
             yield return null;
@@ -67,25 +67,16 @@ public class LoadingScreenController : MonoBehaviour
 
     private void UpdateProgress(AsyncOperation loading)
     {
-        progress = loading.progress;
+        Pogress = loading.progress;
         progressBar.fillAmount = loading.progress;
         OnProgressUpdated?.Invoke(loading.progress);
     }
 
-    public float Progress
-    {
-        get { return progress; }
-    }
+    public float Pogress { get; private set; }
 
-    public bool IsLoadingScreenStarted
-    {
-        get { return isLoadingScreenStarted;  }
-    }
+    public bool IsLoadingScreenStarted { get; private set; }
 
     private const string UI_LOADING = "LOADING: {0}";
     private const float preloadProgress = 0.9f;
-
-    private bool isLoadingScreenStarted;
-    private float progress;
 
 }

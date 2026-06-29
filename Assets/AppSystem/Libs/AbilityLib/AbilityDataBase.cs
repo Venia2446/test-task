@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class AbilityDataBase : MonoBehaviour
 {
-    public float cooldown;
-    public float damage;
+
+    public float Cooldown { get; set; }
+    public float Damage { get; set; }
+
 }

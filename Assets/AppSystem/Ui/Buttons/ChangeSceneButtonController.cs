@@ -8,12 +8,6 @@ public class ChangeSceneButtonController : ButtonControllerBase
 {
     public SceneType targetScene = SceneType.NONE;
 
-    protected override void Init()
-    {
-        base.Init();
-
-        loadingScreenController = AppSystemClient.Instance.loadingScreenController;
-    }
 
     protected override void HandleOnClick()
     {
@@ -29,7 +23,10 @@ public class ChangeSceneButtonController : ButtonControllerBase
             scene = targetScene.ToString();
         }
 
-        loadingScreenController.LoadScene(scene);
+        var appSystem = AppSystemClient.Instance;
+
+        appSystem.PauseManager.TryUnpaseGame();
+        appSystem.loadingScreenController.LoadScene(scene);
     }
 
     protected LoadingScreenController loadingScreenController;

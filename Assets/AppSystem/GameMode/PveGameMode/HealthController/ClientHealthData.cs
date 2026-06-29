@@ -1,7 +1,8 @@
 public class ClientHealthData : HealthDataBase
 {
-    public float maxArmor;
-    public float armorRegenValue;
-    public float armorRegenRateMs;
-    public float armorRegDelay;
+    public float MaxArmor { set; get; }
+    public float ArmorRegenValue { set; get; }
+    public float ArmorRegenRateMs { set; get; }
+    public float ArmorRegenDelay { set; get; }
+
 }

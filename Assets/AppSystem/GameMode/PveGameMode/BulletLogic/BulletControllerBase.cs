@@ -10,10 +10,10 @@ public class BulletControllerBase : MonoBehaviour
 
     public virtual void Init(BulletDataBase bulletData)
     {
-        bulletStruct = bulletData.bulletStruct;
-        damage = bulletData.damage;
-        rigBody = gameObject.GetComponent<Rigidbody2D>();
-        rigBody.velocity = bulletData.angle * Vector2.right * speed;
+        BulletStruct = bulletData.BulletStruct;
+        Damage = bulletData.Damage;
+        var rigBody = gameObject.GetComponent<Rigidbody2D>();
+        rigBody.velocity = bulletData.Angle * Vector2.right * speed;
 
         actions.Add(BulletAction.DESTROY, Destroy);
         actions.Add(BulletAction.HIT_AND_DESTROY, RegisterAndDestroy);
@@ -54,13 +54,13 @@ public class BulletControllerBase : MonoBehaviour
 
     private BulletAction DetermineAction(Collider2D collision) 
     {
-       return bulletStruct.GetTriggerAction(collision.gameObject.tag.ToString());
+       return BulletStruct.GetTriggerAction(collision.gameObject.tag.ToString());
     }
 
-    protected float damage;
-    protected BulletStruct bulletStruct;
+    protected float Damage { get; set; }
 
-    private new Dictionary<BulletAction, Action> actions = new Dictionary<BulletAction, Action>();
     private delegate void Action(Collider2D collision);
-    private Rigidbody2D rigBody;
+    private new Dictionary<BulletAction, Action> actions = new Dictionary<BulletAction, Action>();
+    private BulletStruct BulletStruct { get; set; }
+
 }

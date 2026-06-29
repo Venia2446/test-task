@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static BulletsStructLib;
-using static AbilitiesLib;
 
 public class PowerShotAbilityController : ClientAbilityControllerBase
 {
@@ -11,20 +9,20 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
     public delegate void HandleOnChargeUpdated(float charge);
     public event HandleOnChargeUpdated OnChargeUpdated;
 
-    public override void Init(AbilitiesLib.Ability inAbility)
+    public override void Init(Ability inAbility)
     {
         base.Init(inAbility);
 
         var gameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
-        clientAttackController = gameMode.playerController.clientAttackController;
-        bulletStruct = gameMode.bulletsStructLib.GetBulletStruct(Globals.BulletType.POWER_SHOT);
-        castedData = (ChargedAbilityData)data;
+        ClientAttackController = gameMode.playerController.clientAttackController;
+        BulletStruct = gameMode.bulletsStructLib.GetBulletStruct(Globals.BulletType.POWER_SHOT);
+        CastedData = (ChargedAbilityData)Data;
     }
 
     protected override void Activate()
     {
-        canActivate = false;
-        isCharging = true;
+        CanActivate = false;
+        IsCharging = true;
         FireAbilityActivated();
     }
 
@@ -32,10 +30,10 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
     {
         base.UpdateInner();
 
-        if (isCharging)
+        if (IsCharging)
         {
             ChargeUp();
-            if (charge >= castedData.maxCharge)
+            if (Charge >= CastedData.MaxCharge)
             {
                 StopCharge();
             }
@@ -48,33 +46,32 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            if (isCharging)
+            if (IsCharging)
             {
                 StopCharge();
             }
         }
     }
-
     private void StopCharge()
     {
-        isCharging = false;
+        IsCharging = false;
  
-        var angle = clientAttackController.GetAngleToMouseTarget();
-        StartCoroutine(BuildBullet(bulletStruct, spawn.position, angle, castedData.damage * charge));
+        var angle = ClientAttackController.GetAngleToMouseTarget();
+        StartCoroutine(BuildBullet(BulletStruct, spawn.position, angle, CastedData.Damage * Charge));
 
-        charge = 0;
-        OnChargeUpdated?.Invoke(charge);
+        Charge = 0;
+        OnChargeUpdated?.Invoke(Charge);
         StartCooldown();
     }
 
     private IEnumerator BuildBullet(BulletStruct bulletStructure, Vector3 position, Quaternion angle, float damage)
     {
-        var obj = Instantiate(bulletStructure.stuct, position, angle);
+        var obj = Instantiate(bulletStructure.gameObj, position, angle);
         var bulletData = new PowerShotBulletData();
-        bulletData.angle = angle;
-        bulletData.damage = damage;
-        bulletData.bulletStruct = bulletStruct;
-        bulletData.charge = charge;
+        bulletData.Angle = angle;
+        bulletData.Damage = damage;
+        bulletData.BulletStruct = BulletStruct;
+        bulletData.Charge = Charge;
 
         var bulletController = obj.GetComponent<PowerShotBulletController>();
         bulletController.Init(bulletData);
@@ -84,20 +81,15 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
 
     private void ChargeUp()
     {
-        charge += castedData.chargeUp;
-        OnChargeUpdated?.Invoke(charge);
+        Charge += CastedData.ChargeUp;
+        OnChargeUpdated?.Invoke(Charge);
     }
 
-    public float Charge
-    {
-        get { return charge; }
-    }
+    public float Charge { get; private set; }
 
-    private BulletStruct bulletStruct;
-    private ClientAttackController clientAttackController;
-    private ChargedAbilityData castedData;
-
-    private float charge;
-    private bool isCharging;
+    private BulletStruct BulletStruct { get; set; }
+    private ClientAttackController ClientAttackController { get; set; }
+    private ChargedAbilityData CastedData { get; set; }
+    private bool IsCharging { get; set; }
 
 }

@@ -1,6 +1,8 @@
 public class ChargedAbilityData : AbilityDataBase
 {
-    public float minCharge;
-    public float maxCharge;
-    public float chargeUp;
+
+    public float MinCharge { get; set; }
+    public float MaxCharge { get; set; }
+    public float ChargeUp { get; set; }
+
 }

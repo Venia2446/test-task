@@ -23,12 +23,12 @@ public class EnemyHealthController : HealthControllerBase
     {
         base.LocalHandleOnOnReceiveDamage();
 
-        audioSystem.PlayOneShot(AudioClipType.CLIENT_HIT);
+        AudioSystem.PlayOneShot(AudioClipType.CLIENT_HIT);
     }
 
     protected void Destroy()
     {
-        audioSystem.PlayOneShot(AudioClipType.ENEMY_DEAD);
+        AudioSystem.PlayOneShot(AudioClipType.ENEMY_DEAD);
 
         gameObject.GetComponent<Collider2D>().enabled = false;
 
@@ -45,5 +45,5 @@ public class EnemyHealthController : HealthControllerBase
         Object.Destroy(gameObject);
     }
 
-    private float destoyObjDelay = 1.5f;
+    private const float destoyObjDelay = 1.5f;
 }

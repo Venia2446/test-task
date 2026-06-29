@@ -5,7 +5,7 @@ using static Globals;
 
 public class HealthControllerBase : MonoBehaviour
 {
-    public HitEffectController hitEffectController;
+    public DamageEffectController hitEffectController;
 
     public delegate void HandleOnReceivedDamage(StatType statType);
     public delegate void HandleOnReceivedHealthDamage(float currentHealt);
@@ -17,9 +17,9 @@ public class HealthControllerBase : MonoBehaviour
 
     public virtual void Init(HealthDataBase data)
     {
-        audioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
+        AudioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
 
-        MaxHealth = data.maxHealth;
+        MaxHealth = data.MaxHealth;
         Health = MaxHealth;
 
         OnReceiveDamage += (_) => LocalHandleOnOnReceiveDamage();
@@ -40,32 +40,32 @@ public class HealthControllerBase : MonoBehaviour
         TryUpdateDeadState(TryRegisterHealthDamage(damage));
     }
 
-     protected bool TryRegisterHealthDamage(float damage)
+     protected float TryRegisterHealthDamage(float damage)
     {
         if (IsDead)
         {
-            return IsDead;
+            return Health;
         }
 
-        var newHealth = Health - damage;
+        var newHealth = Mathf.Clamp(Health - damage, MinHealth, MaxHealth);
+
         if (newHealth == Health)
         {
-            return IsDead;
+            return Health;
         }
 
-        var newDeadState = (newHealth <= MinHealth);
-        Health = Mathf.Clamp(newHealth, MinHealth, MaxHealth);
-
+        Health = newHealth;
         OnReceivedHealthDamage?.Invoke(Health);
         FireRecieveDamage(StatType.HEALTH);
-        return newDeadState;
+        return Health;
     }
 
-    protected void TryUpdateDeadState(bool newState)
+    protected void TryUpdateDeadState(float newHealth)
     {
-        if (newState != IsDead)
+        var newDeadState = (newHealth <= MinHealth);
+        if (newDeadState != IsDead)
         {
-            IsDead = newState;
+            IsDead = newDeadState;
             OnDeath?.Invoke();
         }
     }
@@ -79,34 +79,15 @@ public class HealthControllerBase : MonoBehaviour
         OnReceiveDamage?.Invoke(type);
     }
 
-    public bool IsDead
-    {
-        set { isDead = value; }
-        get { return isDead; }
-    }
-
-    public float Health
-    {
-        set { health = value; }
-        get { return health; }
-    }
-
-    public float MaxHealth
-    {
-        set { maxHealth = value; }
-        get { return maxHealth; }
-    }
-
     public float MinHealth
     {
         get { return minHealth; }
     }
 
+    public bool IsDead { get; protected set; }
+    public float Health { get; protected set; }
+    public float MaxHealth { get; protected set; }
+
     protected const float minHealth = 0;
-
-    protected bool isDead;
-    protected float health;
-    protected float maxHealth;
-
-    protected AudioSystem audioSystem;
+    protected AudioSystem AudioSystem { get; set; }
 }

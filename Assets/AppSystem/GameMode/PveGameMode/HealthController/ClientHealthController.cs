@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static DifficultyPresetsLib;
 using static Globals;
 
 public class ClientHealthController : HealthControllerBase
@@ -17,10 +16,10 @@ public class ClientHealthController : HealthControllerBase
         base.Init(data);
 
         var castedData = (ClientHealthData)data;
-        MaxArmor = castedData.maxArmor;
-        armorRegenValue = castedData.armorRegenValue;
-        armorRegenRateMs = castedData.armorRegenRateMs;
-        armorRegDelay = castedData.armorRegDelay;
+        MaxArmor = castedData.MaxArmor;
+        ArmorRegenValue = castedData.ArmorRegenValue;
+        ArmorRegenRateMs = castedData.ArmorRegenRateMs;
+        ArmorRegDelay = castedData.ArmorRegenDelay;
 
         Armor = MaxArmor;
     }
@@ -32,26 +31,13 @@ public class ClientHealthController : HealthControllerBase
         base.Terminate();
     }
 
-    public bool HasArmor
-    {
-        get { return Armor != 0; }
-    }
-
-    public float Armor
-    {
-        set { armor = value; }
-        get { return armor; }
-    }
-
-    public float MaxArmor
-    {
-        set { maxArmor = value; }
-        get { return maxArmor; }
-    }
-
     public float MinArmor
     {
         get { return minArmor; }
+    }
+    public bool HasArmor
+    {
+        get { return Armor != 0; }
     }
 
     public override void RegisterTakingDamage(float damage)
@@ -91,9 +77,9 @@ public class ClientHealthController : HealthControllerBase
     {
         base.LocalHandleOnOnReceiveDamage();
 
-        audioSystem.PlayOneShot(AudioClipType.MELEE_HIT);
+        AudioSystem.PlayOneShot(AudioClipType.MELEE_HIT);
         StopRegetArmor();
-        StartCoroutine(StartArmorRegen(armorRegDelay, armorRegenRateMs / 1000));
+        StartCoroutine(StartArmorRegen(ArmorRegDelay, ArmorRegenRateMs / 1000));
     }
 
     private IEnumerator StartArmorRegen(float delay, float frequency)
@@ -102,7 +88,7 @@ public class ClientHealthController : HealthControllerBase
         while (true)
         {
             yield return new WaitForSeconds(frequency);
-            var newArmor = Mathf.Clamp(Armor + armorRegenValue, MinArmor, MaxArmor);
+            var newArmor = Mathf.Clamp(Armor + ArmorRegenValue, MinArmor, MaxArmor);
             if (Armor != newArmor)
             {
                 Armor = newArmor;
@@ -117,11 +103,9 @@ public class ClientHealthController : HealthControllerBase
     }
 
     private const float minArmor = 0;
-    private float maxArmor;
-
-    private float armor;
-
-    private float armorRegenValue;
-    private float armorRegenRateMs;
-    private float armorRegDelay;
+    public float MaxArmor { get; private set; }
+    public float Armor { get; private set; }
+    public float ArmorRegenValue { get; private set; }
+    public float ArmorRegenRateMs { get; private set; }
+    public float ArmorRegDelay { get; private set; }
 }

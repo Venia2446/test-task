@@ -9,7 +9,7 @@ public class AudioSystem : MonoBehaviour
 
     public void Init(SoundsLib soundsLib)
     {
-        datas = soundsLib.AudioDatas;
+        Datas = soundsLib.AudioDatas;
         audioSourceGame.Play();
     }
 
@@ -20,9 +20,9 @@ public class AudioSystem : MonoBehaviour
 
     public void PlayOneShot(AudioClipType type)
     {
-        audioSourceGame.PlayOneShot(datas[type]);
+        audioSourceGame.PlayOneShot(Datas[type]);
     }
 
-    private Dictionary<AudioClipType, AudioClip> datas;
+    private Dictionary<AudioClipType, AudioClip> Datas { set; get; }
 
 }

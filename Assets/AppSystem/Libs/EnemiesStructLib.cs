@@ -5,24 +5,24 @@ using static Globals;
 
 public class EnemiesStructLib : MonoBehaviour
 {
-    [SerializeField] GameObject[] enemies;
+    public GameObject[] enemies;
 
     public void Init()
     {
         foreach (var obj in enemies)
         {
-            var enemyBase = obj.GetComponent<EnemyBase>();
+            var enemyBase = obj.GetComponent<EnemyManagerBase>();
             enemiesInfo.Add(enemyBase.enemyType, new EnemyData(obj, enemyBase));
         }
     }
 
-    public GameObject GetEnemyObj(EnemyType type)
+    public GameObject GetGameObj(EnemyType type)
     {
-        return enemiesInfo[type].GetObj();
+        return enemiesInfo[type].GameObj;
     }
-    public EnemyBase GetEnemyBase(EnemyType type)
+    public EnemyManagerBase GetManager(EnemyType type)
     {
-        return enemiesInfo[type].GetBase();
+        return enemiesInfo[type].Manager;
     }
 
     public Dictionary<EnemyType, EnemyData> GetEnemiesDatas()
@@ -31,26 +31,18 @@ public class EnemiesStructLib : MonoBehaviour
     }
 
     private Dictionary<EnemyType, EnemyData> enemiesInfo = new Dictionary<EnemyType, EnemyData>();
+
 }
 
 public class EnemyData
 {
-    private GameObject enemyObj;
-    private EnemyBase enemyBase;
+    public GameObject GameObj { get; private set; }
+    public EnemyManagerBase Manager { get; private set; }
 
-    public EnemyData(GameObject inEnemyObj, EnemyBase inEnemyBase)
+    public EnemyData(GameObject inEnemyObj, EnemyManagerBase inEnemyManager)
     {
-        enemyObj = inEnemyObj;
-        enemyBase = inEnemyBase;
+        GameObj = inEnemyObj;
+        Manager = inEnemyManager;
     }
 
-    public GameObject GetObj()
-    {
-        return enemyObj;
-    }
-
-    public EnemyBase GetBase()
-    {
-        return enemyBase;
-    }
 }

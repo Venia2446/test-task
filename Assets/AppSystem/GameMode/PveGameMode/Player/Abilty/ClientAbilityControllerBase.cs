@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameEvents;
+using System;
+using static Globals;
 using static AbilitiesLib;
 
 public class ClientAbilityControllerBase : MonoBehaviour
@@ -20,21 +21,16 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     public virtual void Init(Ability inAbility)
     {
-        audioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
+        AudioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
 
-        ability = inAbility;
-        data = ability.data;
-        canActivate = true;
+        Ability = inAbility;
+        Data = Ability.Data;
+        CanActivate = true;
     }
 
     public void Terminate()
     {
         StopAllCoroutines();
-    }
-
-    private void OnDestroy()
-    {
-        Terminate();
     }
 
     public virtual void TryActivate()
@@ -49,33 +45,33 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     protected virtual void Activate()
     {
-        canActivate = false;
+        CanActivate = false;
         StartCooldown();
         FireAbilityActivated();
     }
 
     protected void FireAbilityActivated()
     {
-        audioSystem.PlayOneShot(Globals.AudioClipType.PLAYER_SHOOTING);
+        AudioSystem.PlayOneShot(AudioClipType.PLAYER_SHOOTING);
         OnAbilityActivated?.Invoke();
     }
 
     protected void StartCooldown()
     {
-        cooldown = data.cooldown;
-        isCooldownStatred = true;
-        StartCoroutine(StopCooldown(data.cooldown));
+        Cooldown = Data.Cooldown;
+        IsCooldownStatred = true;
+        StartCoroutine(StopCooldown(Data.Cooldown));
         OnCooldownStarted?.Invoke();
     }
 
     private IEnumerator StopCooldown(float delay)
     {
         yield return new WaitForSeconds(delay);
-        audioSystem.PlayOneShot(Globals.AudioClipType.ABILITY);
-        cooldown = 0;
-        canActivate = true;
-        isCooldownStatred = false;
-        OnCooldownUpdated?.Invoke(cooldown);
+        AudioSystem.PlayOneShot(AudioClipType.ABILITY);
+        Cooldown = 0;
+        CanActivate = true;
+        IsCooldownStatred = false;
+        OnCooldownUpdated?.Invoke(Cooldown);
         OnAbilityReady?.Invoke();
     }
 
@@ -86,36 +82,20 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     protected virtual void UpdateInner()
     {
-        if (isCooldownStatred)
+        if (IsCooldownStatred)
         {
-            cooldown -= Time.deltaTime;
-            OnCooldownUpdated?.Invoke(cooldown);
+            Cooldown -= Time.deltaTime;
+            OnCooldownUpdated?.Invoke(Cooldown);
         }
     }
 
-    protected virtual AbilityDataBase GetData()
-    {
-        return data;
-    }
+    public float Cooldown { get; private set; }
 
-    public bool CanActivate
-    {
-        get {return canActivate; }
-    }
+    protected AbilityDataBase Data { get; set; }
+    protected bool CanActivate { get; set; }
 
-    public float Cooldown
-    {
-        get { return cooldown; }
-    }
+    private Ability Ability { get; set; }
+    private AudioSystem AudioSystem { get; set; }
+    private bool IsCooldownStatred { get; set; }
 
-    protected Ability ability;
-    protected AbilityDataBase data;
-
-    protected bool isCooldownStatred;
-    protected bool canActivate;
-
-    private AudioSystem audioSystem;
-
-    private float cooldown;
-    
 }
