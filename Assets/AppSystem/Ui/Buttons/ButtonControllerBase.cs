@@ -6,11 +6,17 @@ using UnityEngine.EventSystems;
 
 public class ButtonControllerBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+
     private void Start()
     {
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(HandleOnClick);
         Init();
+    }
+
+    private void OnDestroy()
+    {
+        Terminate();
     }
 
     protected virtual void Init()
@@ -21,11 +27,6 @@ public class ButtonControllerBase : MonoBehaviour, IPointerEnterHandler, IPointe
     protected virtual void Terminate()
     {
         button.onClick?.RemoveAllListeners();
-    }
-
-    private void OnDestroy()
-    {
-        Terminate();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

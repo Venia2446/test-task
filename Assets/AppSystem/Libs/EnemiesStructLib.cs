@@ -18,11 +18,11 @@ public class EnemiesStructLib : MonoBehaviour
 
     public GameObject GetGameObj(EnemyType type)
     {
-        return enemiesInfo[type].GameObj;
+        return enemiesInfo[type].gameObj;
     }
     public EnemyManagerBase GetManager(EnemyType type)
     {
-        return enemiesInfo[type].Manager;
+        return enemiesInfo[type].manager;
     }
 
     public Dictionary<EnemyType, EnemyData> GetEnemiesDatas()
@@ -36,13 +36,13 @@ public class EnemiesStructLib : MonoBehaviour
 
 public class EnemyData
 {
-    public GameObject GameObj { get; private set; }
-    public EnemyManagerBase Manager { get; private set; }
+    public GameObject gameObj;
+    public EnemyManagerBase manager;
 
     public EnemyData(GameObject inEnemyObj, EnemyManagerBase inEnemyManager)
     {
-        GameObj = inEnemyObj;
-        Manager = inEnemyManager;
+        gameObj = inEnemyObj;
+        manager = inEnemyManager;
     }
 
 }

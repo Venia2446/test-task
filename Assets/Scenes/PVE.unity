@@ -1265,7 +1265,6 @@ GameObject:
   - component: {fileID: 821799744}
   - component: {fileID: 821799747}
   - component: {fileID: 821799757}
-  - component: {fileID: 821799756}
   - component: {fileID: 821799755}
   - component: {fileID: 821799758}
   - component: {fileID: 821799759}
@@ -1411,6 +1410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  rigidbody: {fileID: 4366722582576920236}
 --- !u!114 &821799751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spreadeAngle: 15
-  shootingDelay: 1
+  attackDelay: 1
   spawnerTransform: {fileID: 4366722582576920232}
   gunTransform: {fileID: 4366722582576920233}
   bulletsCount: 5
@@ -1467,21 +1467,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletsStructsRaw:
   - type: 0
-    stuct: {fileID: 3619517506692630953, guid: dcc8dbbed7090eb45bf0adab00bb9bc4, type: 3}
+    gameObj: {fileID: 3619517506692630953, guid: dcc8dbbed7090eb45bf0adab00bb9bc4, type: 3}
     bulleTTriggersRaw:
     - collisionTag: Enemy
       action: 2
     - collisionTag: Wall
       action: 3
   - type: 1
-    stuct: {fileID: 1093809459564269837, guid: b8764aa61290e44429f628e1bf8b2199, type: 3}
+    gameObj: {fileID: 1093809459564269837, guid: b8764aa61290e44429f628e1bf8b2199, type: 3}
     bulleTTriggersRaw:
     - collisionTag: Player
       action: 2
     - collisionTag: Wall
       action: 3
   - type: 2
-    stuct: {fileID: 527076735827756941, guid: 30b54cbc560a5dc4a8c420c6aa2e26ac, type: 3}
+    gameObj: {fileID: 527076735827756941, guid: 30b54cbc560a5dc4a8c420c6aa2e26ac, type: 3}
     bulleTTriggersRaw:
     - collisionTag: Enemy
       action: 1
@@ -1500,24 +1500,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 5
-  damage: 10
+  damage: 2
   minCharge: 0
   maxCharge: 100
   chargeUp: 0.2
---- !u!114 &821799756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821799742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7604d95651a7fa74195393827ac525f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 5
-  damage: 0
 --- !u!114 &821799757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1559,18 +1545,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datas:
-  - type: 5
-    clip: {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
   - type: 0
-    clip: {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
+    clip: {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
   - type: 1
     clip: {fileID: 8300000, guid: 4b294d59d2399014daa718b35c9de73b, type: 3}
   - type: 2
     clip: {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
   - type: 3
-    clip: {fileID: 8300000, guid: 6f0c572d865b4664db7a460972bc4768, type: 3}
+    clip: {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
   - type: 4
     clip: {fileID: 8300000, guid: 6b7eaf4532a2f614595ad58d2b86efc4, type: 3}
+  - type: 5
+    clip: {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
 --- !u!114 &821799760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8351,6 +8337,11 @@ GameObject:
 --- !u!212 &4366722582576920235 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4366722583326047277, guid: 2b971e90b847c884b87fc2eb11795afc, type: 3}
+  m_PrefabInstance: {fileID: 4366722582576920231}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &4366722582576920236 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 4366722583326047274, guid: 2b971e90b847c884b87fc2eb11795afc, type: 3}
   m_PrefabInstance: {fileID: 4366722582576920231}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7943227135084417018

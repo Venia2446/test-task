@@ -22,7 +22,7 @@ public class AbilityCooldownBarController : PowerShotAbilityBar
     {
         base.SetLerpRange();
 
-        minValue = abilityData.Cooldown; 
+        minValue = abilityData.cooldown; 
         maxValue = 0;
     }
 

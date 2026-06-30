@@ -8,7 +8,7 @@ public class ClientBulletController : BulletControllerBase
     {
         base.RegisterDamage(collision);
 
-        if (collision.gameObject.TryGetComponent<EnemyHealthController>(out EnemyHealthController enemyHealthController))
+        if (collision.gameObject.TryGetComponent(out EnemyHealthController enemyHealthController))
         {
             enemyHealthController.RegisterTakingDamage(Damage);
         }

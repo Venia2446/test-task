@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using static Globals;
 
 public class ClientHealthController : HealthControllerBase
 {
-    public delegate void HandleOnReceivedArmorDamage(float currentArmor);
-    public delegate void HandleArmorRegen(float currentArmor);
 
-    public event HandleOnReceivedArmorDamage OnReceivedArmorDamage;
-    public event HandleArmorRegen OnArmorRegen;
+    public event Action<float> OnReceivedArmorDamage;
+    public event Action<float> OnArmorRegen;
 
     public override void Init(HealthDataBase data)
     {
@@ -22,6 +21,9 @@ public class ClientHealthController : HealthControllerBase
         ArmorRegDelay = castedData.ArmorRegenDelay;
 
         Armor = MaxArmor;
+
+        RegenDelay = new WaitForSeconds(ArmorRegDelay);
+        RegenFrequency = new WaitForSeconds(ArmorRegenRateMs / 1000);
     }
 
     public override void Terminate()
@@ -37,7 +39,7 @@ public class ClientHealthController : HealthControllerBase
     }
     public bool HasArmor
     {
-        get { return Armor != 0; }
+        get { return !Mathf.Approximately(Armor, 0); }
     }
 
     public override void RegisterTakingDamage(float damage)
@@ -56,7 +58,7 @@ public class ClientHealthController : HealthControllerBase
         float remainingDamage = 0f;
         var newArmorValue = Armor - damage;
 
-        if (newArmorValue == Armor)
+        if (Mathf.Approximately(newArmorValue, Armor))
         {
             return remainingDamage;
         }
@@ -73,23 +75,23 @@ public class ClientHealthController : HealthControllerBase
         return remainingDamage;
     }
 
-    protected override void LocalHandleOnOnReceiveDamage()
+    protected override void LocalHandleOnReceiveDamage()
     {
-        base.LocalHandleOnOnReceiveDamage();
+        base.LocalHandleOnReceiveDamage();
 
         AudioSystem.PlayOneShot(AudioClipType.MELEE_HIT);
         StopRegetArmor();
-        StartCoroutine(StartArmorRegen(ArmorRegDelay, ArmorRegenRateMs / 1000));
+        StartCoroutine(StartArmorRegen());
     }
 
-    private IEnumerator StartArmorRegen(float delay, float frequency)
+    private IEnumerator StartArmorRegen()
     {
-        yield return new WaitForSeconds(delay);
+        yield return RegenDelay;
         while (true)
         {
-            yield return new WaitForSeconds(frequency);
+            yield return RegenFrequency;
             var newArmor = Mathf.Clamp(Armor + ArmorRegenValue, MinArmor, MaxArmor);
-            if (Armor != newArmor)
+            if (!Mathf.Approximately(Armor, newArmor))
             {
                 Armor = newArmor;
                 OnArmorRegen?.Invoke(Armor);
@@ -102,7 +104,11 @@ public class ClientHealthController : HealthControllerBase
         StopAllCoroutines();
     }
 
+
     private const float minArmor = 0;
+    private WaitForSeconds RegenDelay { get; set; }
+    private WaitForSeconds RegenFrequency { get; set; }
+
     public float MaxArmor { get; private set; }
     public float Armor { get; private set; }
     public float ArmorRegenValue { get; private set; }

@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public void Init(DiffcultyPreset diffPreset, BulletsStructLib bulletStructLib, AbilitiesLib abilitiesLib, AudioSystem audioSystem)
     {
         clientHealthController.Init(CreateHealthData(diffPreset));
-        clientMovementController.Init(player);
         clientAttackController.Init(diffPreset, bulletStructLib, audioSystem);
         clientAbilitySystem.Init(abilitiesLib);
     }

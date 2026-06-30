@@ -12,7 +12,7 @@ public class BulletsStructLib : MonoBehaviour
         foreach (var data in bulletsStructsRaw)
         {
             data.CreateTriggersData();
-            bulletsStructs.Add(data.Type, data);
+            bulletsStructs.Add(data.type, data);
         }
     }
     
@@ -28,8 +28,8 @@ public class BulletsStructLib : MonoBehaviour
 [System.Serializable]
 public class BulletStruct
 {
-    public BulletType Type { get; set; }
-    public GameObject gameObj { get; set; }
+    public BulletType type;
+    public GameObject gameObj;
     public BulleTTrigger[] bulleTTriggersRaw;
 
     public BulletAction GetTriggerAction(string tag)
@@ -41,7 +41,7 @@ public class BulletStruct
     {
         foreach (var tirggetData in bulleTTriggersRaw)
         {
-            triggers.Add(tirggetData.CollisionTag, tirggetData.Action);
+            triggers.Add(tirggetData.collisionTag, tirggetData.action);
         }
     }
 
@@ -53,7 +53,7 @@ public class BulletStruct
 public class BulleTTrigger
 {
 
-    public string CollisionTag { get; set; }
-    public BulletAction Action { get; set; } = BulletAction.DESTROY;
+    public string collisionTag;
+    public BulletAction action = BulletAction.DESTROY;
 
 }

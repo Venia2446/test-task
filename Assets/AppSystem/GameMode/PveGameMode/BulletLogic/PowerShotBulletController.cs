@@ -6,6 +6,7 @@ public class PowerShotBulletController : ClientBulletController
 {
 
     public float scale = 15;
+    public Transform transform;
 
     public override void Init(BulletDataBase bulletData)
     {
@@ -13,7 +14,7 @@ public class PowerShotBulletController : ClientBulletController
 
         var castedData = (PowerShotBulletData)bulletData;
         var newScale = castedData.Charge / scale;
-        gameObject.GetComponent<Transform>().localScale += new Vector3(newScale, newScale, newScale);
+        transform.localScale += new Vector3(newScale, newScale, newScale);
     }
 
 }

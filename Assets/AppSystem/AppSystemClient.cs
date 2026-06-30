@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Globals;
@@ -10,8 +11,7 @@ public class AppSystemClient : MonoBehaviour
     public EnemiesStatsLib enemyStatsLib;
     public LoadingScreenController loadingScreenController;
 
-    public delegate void HandleOnAppSystemCreated();
-    public event HandleOnAppSystemCreated OnCreated;
+    public event Action OnCreated;
     public static AppSystemClient Instance { get; private set; }
 
     private void Awake()
@@ -20,7 +20,6 @@ public class AppSystemClient : MonoBehaviour
 
         InitLibs();
         BuildGlobalSystems();
-        InitGlobalSystems();
 
         IsCreated = true;
         OnCreated?.Invoke();
@@ -40,11 +39,6 @@ public class AppSystemClient : MonoBehaviour
         GameEvents = new GameEvents();
         PauseManager = new PauseManager();
         GameModeBuider = new GameModeBuilder(diffLib);
-    }
-
-    private void InitGlobalSystems()
-    {
-        GameModeBuider.Init();
     }
 
     public void SubscribeGameMode(GameModeBase inGameMode)
@@ -93,7 +87,6 @@ public class AppSystemClient : MonoBehaviour
 
     private void FireGameEnded()
     {
-        GameModeBuider.Init();
         GameEvents.GameEnded();
     }
 

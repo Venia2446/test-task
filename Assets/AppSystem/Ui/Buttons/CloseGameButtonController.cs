@@ -10,4 +10,5 @@ public class CloseGameButtonController : ButtonControllerBase
 
         Application.Quit();
     }
+
 }

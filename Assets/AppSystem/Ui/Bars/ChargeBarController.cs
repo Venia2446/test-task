@@ -27,8 +27,8 @@ public class ChargeBarController : PowerShotAbilityBar
     {
         base.SetLerpRange();
 
-        minValue = abilityData.MinCharge;
-        maxValue = abilityData.MaxCharge;
+        minValue = abilityData.minCharge;
+        maxValue = abilityData.maxCharge;
     }
 
 }

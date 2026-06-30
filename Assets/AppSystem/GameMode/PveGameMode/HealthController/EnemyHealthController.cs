@@ -5,11 +5,19 @@ using static Globals;
 
 public class EnemyHealthController : HealthControllerBase
 {
+
+    public Collider2D collider;
+    public EnemyMovementControllerBase movementController;
+    public EnemyAttackControllerBase attackControllerBase;
+
+
     public override void Init(HealthDataBase data)
     {
         base.Init(data);
 
         OnDeath += Destroy;
+
+        DestroyDelay = new WaitForSeconds(destoyObjDelay);
     }
 
     public override void Terminate()
@@ -19,9 +27,9 @@ public class EnemyHealthController : HealthControllerBase
         base.Terminate();
     }
 
-    protected override void LocalHandleOnOnReceiveDamage()
+    protected override void LocalHandleOnReceiveDamage()
     {
-        base.LocalHandleOnOnReceiveDamage();
+        base.LocalHandleOnReceiveDamage();
 
         AudioSystem.PlayOneShot(AudioClipType.CLIENT_HIT);
     }
@@ -30,20 +38,20 @@ public class EnemyHealthController : HealthControllerBase
     {
         AudioSystem.PlayOneShot(AudioClipType.ENEMY_DEAD);
 
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        collider.enabled = false;
+        movementController.enabled = false;
+        attackControllerBase.Terminate();
 
-        gameObject.GetComponent<EnemyMovementControllerBase>().enabled = false;
-        gameObject.GetComponent<EnemyAttackControllerBase>().Terminate();
-
-        hitEffectController.StartEnemyDeathEffect(destoyObjDelay);
+        hitEffectController.StartEnemyDeathEffect();
         StartCoroutine(DelayedDestroy());
     }
 
     private IEnumerator DelayedDestroy()
     {
-        yield return new WaitForSeconds(destoyObjDelay);
+        yield return DestroyDelay;
         Object.Destroy(gameObject);
     }
 
-    private const float destoyObjDelay = 1.5f;
+    private WaitForSeconds DestroyDelay { get; set; }
+
 }

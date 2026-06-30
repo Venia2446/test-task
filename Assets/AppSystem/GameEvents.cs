@@ -1,23 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameEvents
 {
     public static GameEvents Instance { get; private set; }
 
-    public delegate void HandleOnGameReady();
-    private event HandleOnGameReady OnGameReady;
-
-    public delegate void HandleOnGameEnded();
-    private event HandleOnGameEnded OnGameEnded;
+    private event Action OnGameReady;
+    private event Action OnGameEnded;
 
     public GameEvents()
     {
         Instance = this;
     }
 
-    public void SubscribeGameEvent(HandleOnGameReady cbReady = null, HandleOnGameEnded cbEnded = null)
+    public void SubscribeGameEvent(Action cbReady = null, Action cbEnded = null)
     {
         if (cbEnded != null)
         {
@@ -27,14 +25,14 @@ public class GameEvents
         if (cbReady != null)
         {
             OnGameReady += cbReady;
-            if (isGameReady)
+            if (IsGameReady)
             {
                 cbReady.Invoke();
             }
         }
     }
 
-    public void UnsubscribeGameEvents(HandleOnGameReady cbReady = null, HandleOnGameEnded cbEnded = null)
+    public void UnsubscribeGameEvents(Action cbReady = null, Action cbEnded = null)
     {
         if (cbReady != null)
         {
@@ -48,18 +46,17 @@ public class GameEvents
     }
    public void GameReady()
     {
-        isGameReady = true;
-        OnGameReady.Invoke();
+        IsGameReady = true;
+        OnGameReady?.Invoke();
     }
 
     public void GameEnded()
     {
-        if (isGameReady)
-            isGameReady = false;
-        OnGameEnded.Invoke();
-      
+        if (IsGameReady)
+            IsGameReady = false;
+        OnGameEnded?.Invoke();
     }
 
-    public bool isGameReady { get; private set; }
+    public bool IsGameReady { get; private set; }
 
 }

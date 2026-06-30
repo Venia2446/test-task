@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using static Globals;
-using static DifficultyPresetsLib;
 
 public class SelectDifficlultyButtonController : ChangeSceneButtonController
 {

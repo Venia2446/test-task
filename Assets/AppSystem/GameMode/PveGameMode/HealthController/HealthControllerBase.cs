@@ -1,19 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using static Globals;
 
 public class HealthControllerBase : MonoBehaviour
 {
     public DamageEffectController hitEffectController;
 
-    public delegate void HandleOnReceivedDamage(StatType statType);
-    public delegate void HandleOnReceivedHealthDamage(float currentHealt);
-    public delegate void HandleOnDeath();
-
-    public event HandleOnReceivedDamage OnReceiveDamage;
-    public event HandleOnReceivedHealthDamage OnReceivedHealthDamage;
-    public event HandleOnDeath OnDeath;
+    public event Action<StatType> OnReceiveDamage;
+    public event Action<float> OnReceivedHealthDamage;
+    public event Action OnDeath;
 
     public virtual void Init(HealthDataBase data)
     {
@@ -22,17 +19,12 @@ public class HealthControllerBase : MonoBehaviour
         MaxHealth = data.MaxHealth;
         Health = MaxHealth;
 
-        OnReceiveDamage += (_) => LocalHandleOnOnReceiveDamage();
+        OnReceiveDamage += (_) => LocalHandleOnReceiveDamage();
     }
 
     public virtual void Terminate()
     {
-        OnReceiveDamage -= (_) => LocalHandleOnOnReceiveDamage();
-    }
-
-    private void OnDestroy()
-    {
-        Terminate();
+        OnReceiveDamage -= (_) => LocalHandleOnReceiveDamage();
     }
 
     public virtual void RegisterTakingDamage(float damage)
@@ -49,11 +41,10 @@ public class HealthControllerBase : MonoBehaviour
 
         var newHealth = Mathf.Clamp(Health - damage, MinHealth, MaxHealth);
 
-        if (newHealth == Health)
+        if (Mathf.Approximately(newHealth, Health))
         {
             return Health;
         }
-
         Health = newHealth;
         OnReceivedHealthDamage?.Invoke(Health);
         FireRecieveDamage(StatType.HEALTH);
@@ -62,14 +53,15 @@ public class HealthControllerBase : MonoBehaviour
 
     protected void TryUpdateDeadState(float newHealth)
     {
-        var newDeadState = (newHealth <= MinHealth);
+        var newDeadState = Mathf.Approximately(newHealth, MinHealth);
         if (newDeadState != IsDead)
         {
             IsDead = newDeadState;
             OnDeath?.Invoke();
         }
     }
-    protected virtual void LocalHandleOnOnReceiveDamage()
+
+    protected virtual void LocalHandleOnReceiveDamage()
     {
         hitEffectController.ShowHitEffect();
     }
@@ -79,11 +71,7 @@ public class HealthControllerBase : MonoBehaviour
         OnReceiveDamage?.Invoke(type);
     }
 
-    public float MinHealth
-    {
-        get { return minHealth; }
-    }
-
+    public float MinHealth { get { return minHealth; } }
     public bool IsDead { get; protected set; }
     public float Health { get; protected set; }
     public float MaxHealth { get; protected set; }

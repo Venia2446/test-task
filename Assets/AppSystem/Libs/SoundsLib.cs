@@ -12,7 +12,7 @@ public class SoundsLib : MonoBehaviour
     {
         foreach (var data in datas)
         {
-            audioDatas.Add(data.Type, data.Clip);
+            audioDatas.Add(data.type, data.clip);
         }
     }
     public Dictionary<AudioClipType, AudioClip> AudioDatas
@@ -32,7 +32,6 @@ public class SoundsLib : MonoBehaviour
 [System.Serializable]
 public class SoundData
 {
-    public AudioClipType Type { get; set; }
-    public AudioClip Clip { get; set; }
-
+    public AudioClipType type;
+    public AudioClip clip;
 }

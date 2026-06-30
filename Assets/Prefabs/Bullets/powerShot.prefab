@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  rigidbody: {fileID: 5598451527549575525}
   scale: 15
+  transform: {fileID: 9166766658333345764}
 --- !u!1001 &3849335789005180452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75,5 +77,15 @@ PrefabInstance:
 --- !u!1 &527076735827756941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3619517506692630953, guid: dcc8dbbed7090eb45bf0adab00bb9bc4, type: 3}
+  m_PrefabInstance: {fileID: 3849335789005180452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9166766658333345764 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5358565799554484672, guid: dcc8dbbed7090eb45bf0adab00bb9bc4, type: 3}
+  m_PrefabInstance: {fileID: 3849335789005180452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &5598451527549575525 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8708312970155781953, guid: dcc8dbbed7090eb45bf0adab00bb9bc4, type: 3}
   m_PrefabInstance: {fileID: 3849335789005180452}
   m_PrefabAsset: {fileID: 0}

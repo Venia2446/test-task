@@ -6,13 +6,15 @@ using static Utils;
 
 public class EnemyRangeAttackController : EnemyAttackControllerBase
 {
+
+    public Transform localTranform;
+
     public override void Init(EnemyAttackDataBase enemyAttackDataBase)
     {
         base.Init(enemyAttackDataBase);
 
         var castedData = (EnemyRangeAttackData)enemyAttackDataBase;
         BulletStruct = castedData.BulletStruct;
-        LocalTransform = gameObject.GetComponent<Transform>();
         TargetTransform = Target.GetComponent<Transform>();
         StartAttack();
     }
@@ -21,10 +23,10 @@ public class EnemyRangeAttackController : EnemyAttackControllerBase
     {
         base.Attack();
 
-        var angle = CalculateRotationAngle(TargetTransform.position, LocalTransform.position);
-        LocalTransform.rotation = angle;
+        var angle = CalculateRotationAngle(TargetTransform.position, localTranform.position);
+        localTranform.rotation = angle;
 
-        BuildBullet(BulletStruct, LocalTransform.transform.position, angle);
+        BuildBullet(BulletStruct, localTranform.transform.position, angle);
     }
 
     private void BuildBullet(BulletStruct bulletStructure, Vector3 position, Quaternion angle)
@@ -40,7 +42,6 @@ public class EnemyRangeAttackController : EnemyAttackControllerBase
         bulletController.Init(bulletData);
     }
 
-    private Transform LocalTransform { get; set; }
     private Transform TargetTransform { get; set; }
     protected BulletStruct BulletStruct { get; set; }
 

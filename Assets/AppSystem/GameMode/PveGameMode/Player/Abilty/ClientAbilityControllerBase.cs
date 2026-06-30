@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Globals;
-using static AbilitiesLib;
 
 public class ClientAbilityControllerBase : MonoBehaviour
 {
-    public delegate void HandleOnAbilityActivated();
-    public event HandleOnAbilityActivated OnAbilityActivated;
-
-    public delegate void HanldeOnAbilityReady();
-    public event HanldeOnAbilityReady OnAbilityReady;
-
-    public delegate void HandleOnCooldownStarted();
-    public event HandleOnCooldownStarted OnCooldownStarted;
-
-    public delegate void HandleOnCooldownUpdated(float cooldown);
-    public event HandleOnCooldownUpdated OnCooldownUpdated;
+    public event Action OnAbilityActivated;
+    public event Action OnAbilityReady;
+    public event Action OnCooldownStarted;
+    public event Action<float> OnCooldownUpdated;
 
     public virtual void Init(Ability inAbility)
     {
         AudioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
 
         Ability = inAbility;
-        Data = Ability.Data;
+        Data = Ability.data;
         CanActivate = true;
+
+        CooldownDelay = new WaitForSeconds(Data.cooldown);
     }
 
     public void Terminate()
@@ -58,15 +52,15 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     protected void StartCooldown()
     {
-        Cooldown = Data.Cooldown;
+        Cooldown = Data.cooldown;
         IsCooldownStatred = true;
-        StartCoroutine(StopCooldown(Data.Cooldown));
+        StartCoroutine(StopCooldown());
         OnCooldownStarted?.Invoke();
     }
 
-    private IEnumerator StopCooldown(float delay)
+    private IEnumerator StopCooldown()
     {
-        yield return new WaitForSeconds(delay);
+        yield return CooldownDelay;
         AudioSystem.PlayOneShot(AudioClipType.ABILITY);
         Cooldown = 0;
         CanActivate = true;
@@ -96,6 +90,7 @@ public class ClientAbilityControllerBase : MonoBehaviour
 
     private Ability Ability { get; set; }
     private AudioSystem AudioSystem { get; set; }
+    private WaitForSeconds CooldownDelay { get; set; }
     private bool IsCooldownStatred { get; set; }
 
 }

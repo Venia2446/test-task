@@ -13,12 +13,14 @@ public class SpawnerControllersManager : MonoBehaviour
         Target = playerController.player;
         EnemyDatas = enemiesStructLib.GetEnemiesDatas();
 
+        SpawnDelay = new WaitForSeconds(inPreset.EnemySpawnRateSec);
+        
         foreach (var spawner in spawners)
         {
             spawnerControllers.Add(spawner.GetComponent<EnemySpawnController>());
         }
 
-        StartCoroutine(StartSpawnLogic(inPreset.EnemySpawnRateSec));
+        StartCoroutine(StartSpawnLogic());
     }
 
     public void Terminate()
@@ -26,18 +28,13 @@ public class SpawnerControllersManager : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private void OnDestroy()
-    {
-        Terminate();
-    }
-
-    private IEnumerator StartSpawnLogic(float frequency)
+    private IEnumerator StartSpawnLogic()
     {
         Spawn();
 
         while (true)
         {
-            yield return new WaitForSeconds(frequency);
+            yield return SpawnDelay;
             Spawn();
         }
     }
@@ -51,6 +48,7 @@ public class SpawnerControllersManager : MonoBehaviour
 
     private List<EnemySpawnController> spawnerControllers = new List<EnemySpawnController>();
 
+    private WaitForSeconds SpawnDelay { get; set; }
     private Dictionary<EnemyType, EnemyData> EnemyDatas { get; set; }
     private GameObject Target { get; set; }
 

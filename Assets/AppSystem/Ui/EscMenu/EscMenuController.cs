@@ -11,13 +11,14 @@ public class EscMenuController : MonoBehaviour
         appSystemClient = AppSystemClient.Instance;
         pauseManager = appSystemClient.PauseManager;
         gameEvents = GameEvents.Instance;
-        gameEvents.SubscribeGameEvent(Init, Terminate);
+        gameEvents.SubscribeGameEvent(Init);
     }
 
     private void OnDestroy()
     {
-
-        Terminate();
+        isInited = false;
+        gameEvents?.UnsubscribeGameEvents(Init);
+        clientHealthController.OnDeath -= OpenMainMenu;
     }
 
     private void Init()
@@ -29,9 +30,7 @@ public class EscMenuController : MonoBehaviour
 
     private void Terminate()
     {
-        isInited = false;
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
-        clientHealthController.OnDeath -= OpenMainMenu;
+
     }
     private void Update()
     {

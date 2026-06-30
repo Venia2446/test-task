@@ -36,7 +36,7 @@ public class EnemyManagerBase : MonoBehaviour
         enemyAttackControllerBase.Init(attackData);
 
         enemyHealthController.OnDeath += HandleOnDeath;
-        enemyHealthController.Init(CreateHealthData(CalculateParamScale(DiffPreset.EnemyHealthScale, EnemyStatsPreset.Hp)));
+        enemyHealthController.Init(CreateHealthData(CalculateParamScale(DiffPreset.EnemyHealthScale, EnemyStatsPreset.hp)));
     }
 
     protected virtual void CacheSystems()
@@ -54,8 +54,8 @@ public class EnemyManagerBase : MonoBehaviour
     protected virtual void FillAttackData(GameObject inTarget)
     {
         attackData.ClientHealthSystem = ClientHealthController;
-        attackData.Damage = CalculateParamScale(DiffPreset.EnemyDamageScale, EnemyStatsPreset.Damage);
-        attackData.AttackFrequency = EnemyStatsPreset.AttackFrequency;
+        attackData.Damage = CalculateParamScale(DiffPreset.EnemyDamageScale, EnemyStatsPreset.damage);
+        attackData.AttackFrequency = EnemyStatsPreset.attackFrequency;
         attackData.Target = inTarget;
     }
 
@@ -73,7 +73,7 @@ public class EnemyManagerBase : MonoBehaviour
 
     private void HandleOnDeath()
     {
-        ScoreManager.IncreaseScore(EnemyStatsPreset.ScoreValue);
+        ScoreManager.IncreaseScore(EnemyStatsPreset.scoreValue);
     }
 
     protected PveGameMode GameMode { get; set; }

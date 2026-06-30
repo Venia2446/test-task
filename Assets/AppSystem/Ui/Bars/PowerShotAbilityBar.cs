@@ -11,8 +11,8 @@ public class PowerShotAbilityBar : BarControllerBase
         base.InitInner();
 
         var ability = playerController.clientAbilitySystem.GetAbility(abilityType);
-        powerShotAbilityController = (PowerShotAbilityController)ability.Controller;
-        abilityData = (ChargedAbilityData)ability.Data;
+        powerShotAbilityController = (PowerShotAbilityController)ability.controller;
+        abilityData = (ChargedAbilityData)ability.data;
     }
 
     protected PowerShotAbilityController powerShotAbilityController;

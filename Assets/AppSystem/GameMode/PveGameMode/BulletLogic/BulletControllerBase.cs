@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Globals;
-using static BulletsStructLib;
 
 public class BulletControllerBase : MonoBehaviour
 {
     public float speed;
+    public Rigidbody2D rigidbody;
 
     public virtual void Init(BulletDataBase bulletData)
     {
         BulletStruct = bulletData.BulletStruct;
         Damage = bulletData.Damage;
-        var rigBody = gameObject.GetComponent<Rigidbody2D>();
-        rigBody.velocity = bulletData.Angle * Vector2.right * speed;
+        rigidbody.velocity = bulletData.Angle * Vector2.right * speed;
 
         actions.Add(BulletAction.DESTROY, Destroy);
         actions.Add(BulletAction.HIT_AND_DESTROY, RegisterAndDestroy);

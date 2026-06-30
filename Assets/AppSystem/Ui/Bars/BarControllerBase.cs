@@ -10,8 +10,14 @@ public class BarControllerBase : MonoBehaviour
     {
         appSystem = AppSystemClient.Instance;
         gameEvents = GameEvents.Instance;
-        gameEvents.SubscribeGameEvent(Init, Terminate);
+        gameEvents.SubscribeGameEvent(Init);
     }
+    private void OnDestroy()
+    {
+        gameEvents?.UnsubscribeGameEvents(Init);
+        Unsubscribe();
+    }
+
     private void Init() 
     {
         playerController = ((PveGameMode)appSystem.GameMode).playerController;
@@ -19,18 +25,6 @@ public class BarControllerBase : MonoBehaviour
         InitInner();
         SetLerpRange();
         Subscribe();
-    }
-
-    public void Terminate()
-    {
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
-        Unsubscribe();
-    }
-
-    private void OnDestroy()
-    {
-
-        Terminate();
     }
 
     protected virtual void InitInner()

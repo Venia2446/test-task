@@ -8,7 +8,6 @@ public class ChangeSceneButtonController : ButtonControllerBase
 {
     public SceneType targetScene = SceneType.NONE;
 
-
     protected override void HandleOnClick()
     {
         base.HandleOnClick();

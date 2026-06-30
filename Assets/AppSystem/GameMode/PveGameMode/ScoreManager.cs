@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
-using static DifficultyPresetsLib;
 
 public class ScoreManager : MonoBehaviour
 {
-    public delegate void HandleOnScoreUpdated(float score);
-    public event HandleOnScoreUpdated OnscoreUpdated;
+    public event Action<float> OnScoreUpdated;
 
     public void Init(DiffcultyPreset preset)
     {
@@ -17,7 +16,7 @@ public class ScoreManager : MonoBehaviour
     {
         value *= ScoreMultiplicator;
         Score += value;
-        OnscoreUpdated?.Invoke(Score);
+        OnScoreUpdated?.Invoke(Score);
     }
 
     public float Score { get; private set; }

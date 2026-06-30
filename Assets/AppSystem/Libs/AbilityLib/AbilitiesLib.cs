@@ -12,7 +12,7 @@ public class AbilitiesLib : MonoBehaviour
     {
         foreach (var ability in abilities)
         {
-            abilityStuctures.Add(ability.Type, ability);
+            abilityStuctures.Add(ability.type, ability);
         }
     }
 
@@ -34,9 +34,9 @@ public class AbilitiesLib : MonoBehaviour
 public class Ability
 {
 
-    public AbilityType Type { get; set; }
-    public ClientAbilityControllerBase Controller { get; set; }
-    public AbilityDataBase Data { get; set; }
+    public AbilityType type;
+    public ClientAbilityControllerBase controller;
+    public AbilityDataBase data;
 
 }
 

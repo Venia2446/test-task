@@ -11,6 +11,8 @@ public class EnemyAttackControllerBase : MonoBehaviour
         Target = enemyAttackDataBase.Target;
         ClientHealthController = enemyAttackDataBase.ClientHealthSystem;
         Damage = enemyAttackDataBase.Damage;
+
+        AttackDelay = new WaitForSeconds(AttackFrequency);
     }
 
     public virtual void Terminate()
@@ -20,16 +22,16 @@ public class EnemyAttackControllerBase : MonoBehaviour
 
     protected virtual void StartAttack()
     {
-        StartCoroutine(AttackCoroutine(AttackFrequency));
+        StartCoroutine(AttackCoroutine());
         IsAttacking = true;
     }
 
-    private IEnumerator AttackCoroutine(float frequency)
+    private IEnumerator AttackCoroutine()
     {
         Attack();
         while (true)
         {
-            yield return new WaitForSeconds(frequency);
+            yield return AttackDelay;
             Attack();
         }
     }
@@ -44,6 +46,8 @@ public class EnemyAttackControllerBase : MonoBehaviour
 
     protected ClientHealthController ClientHealthController { get; set; }
     protected GameObject Target { get; set; }
+    private WaitForSeconds AttackDelay { get; set; }
+
     protected float Damage { get; set; }
     protected float AttackFrequency { get; set; }
     protected bool IsAttacking { get; set; }

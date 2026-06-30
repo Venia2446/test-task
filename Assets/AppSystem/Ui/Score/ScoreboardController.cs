@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Globals;
 
 public class ScoreboardController : MonoBehaviour
 {
@@ -11,7 +10,13 @@ public class ScoreboardController : MonoBehaviour
     private void Awake()
     {
         gameEvents = GameEvents.Instance;
-        gameEvents.SubscribeGameEvent(Init, Terminate);
+        gameEvents.SubscribeGameEvent(Init);
+    }
+
+    private void OnDestroy()
+    {
+        gameEvents?.UnsubscribeGameEvents(Init);
+        scoreManager.OnScoreUpdated -= HandleOnScoreUpdated;
     }
 
     private void Init()
@@ -20,20 +25,8 @@ public class ScoreboardController : MonoBehaviour
         diffType = gameMode.DiffcultyPreset.Type.ToString();
         scoreManager = gameMode.scoreManager;
         multiplicator = scoreManager.ScoreMultiplicator;
-        scoreManager.OnscoreUpdated += HandleOnScoreUpdated;
+        scoreManager.OnScoreUpdated += HandleOnScoreUpdated;
         HandleOnScoreUpdated(scoreManager.Score);
-    }
-
-    private void Terminate()
-    {
-        gameEvents?.UnsubscribeGameEvents(Init, Terminate);
-        scoreManager.OnscoreUpdated -= HandleOnScoreUpdated;
-    }
-
-    private void OnDestroy()
-    {
-
-        Terminate();
     }
 
     private void HandleOnScoreUpdated(float score)

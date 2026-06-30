@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PowerShotAbilityController : ClientAbilityControllerBase
 {
     public Transform spawn;
 
-    public delegate void HandleOnChargeUpdated(float charge);
-    public event HandleOnChargeUpdated OnChargeUpdated;
+    public event Action<float> OnChargeUpdated;
 
     public override void Init(Ability inAbility)
     {
@@ -33,7 +33,7 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
         if (IsCharging)
         {
             ChargeUp();
-            if (Charge >= CastedData.MaxCharge)
+            if (Charge >= CastedData.maxCharge)
             {
                 StopCharge();
             }
@@ -57,7 +57,7 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
         IsCharging = false;
  
         var angle = ClientAttackController.GetAngleToMouseTarget();
-        StartCoroutine(BuildBullet(BulletStruct, spawn.position, angle, CastedData.Damage * Charge));
+        StartCoroutine(BuildBullet(BulletStruct, spawn.position, angle, CastedData.damage * Charge));
 
         Charge = 0;
         OnChargeUpdated?.Invoke(Charge);
@@ -81,7 +81,7 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
 
     private void ChargeUp()
     {
-        Charge += CastedData.ChargeUp;
+        Charge += CastedData.chargeUp;
         OnChargeUpdated?.Invoke(Charge);
     }
 

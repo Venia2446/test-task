@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Globals;
 
 public class DamageEffectController : MonoBehaviour
 {
     public float hideDelaySec = 0.2f; 
+    
     public GameObject hitEffect;
     public SpriteRenderer deathEffect;
     public SpriteRenderer normalState;
 
-    private void OnDestroy()
+    private void Awake()
     {
-        StopAllCoroutines();
+        DeathEffectHideDelay = new WaitForSeconds(0.1f);
+        HitEffectHideDelay = new WaitForSeconds(hideDelaySec);
     }
 
     public void ShowHitEffect()
     {
-        if (isHitShown)
+        if (IsHitShown)
         {
             return;
         }
@@ -26,36 +29,39 @@ public class DamageEffectController : MonoBehaviour
         StartCoroutine(HideEffect());
     }
 
-    public void StartEnemyDeathEffect(float hideDelay)
+    public void StartEnemyDeathEffect()
     {
-        StartCoroutine(StartDeathEffect(hideDelay));
+        StartCoroutine(StartDeathEffect());
     }
 
-    private IEnumerator StartDeathEffect(float fadetime)
+    private IEnumerator StartDeathEffect()
     {
         hitEffect.SetActive(false);
         normalState.enabled = false;
         deathEffect.enabled = true;
 
         var color = deathEffect.color;
-        var deltatime = (fadetime / 0.1f);
+        var deltatime = (destoyObjDelay / 0.1f);
         var delta = 1 / deltatime;
 
-        while (color.a >= 0)
+        while (!Mathf.Approximately(color.a, 0))
         {
             color.a -= delta;
             deathEffect.color = color;
-            yield return new WaitForSeconds(0.1f);
+            yield return DeathEffectHideDelay;
         }
     }
 
     private IEnumerator HideEffect()
     {
-        yield return new WaitForSeconds(hideDelaySec);
+        yield return HitEffectHideDelay;
         hitEffect.SetActive(false);
-        isHitShown = false;
+        IsHitShown = false;
     }
 
-    private bool isHitShown;
+    private WaitForSeconds DeathEffectHideDelay { get; set; }
+    private WaitForSeconds HitEffectHideDelay { get; set; }
+
+    private bool IsHitShown { get; set; }
 
 }

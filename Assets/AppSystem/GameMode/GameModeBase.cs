@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static DifficultyPresetsLib;
-using static GameModeBuilder;
+using System;
 
 public class GameModeBase : MonoBehaviour
 {
-    public delegate void HandleOnGameReady();
-    public delegate void HandleOnGameEnded();
-
-    public event HandleOnGameReady OnGameReady;
-    public event HandleOnGameEnded OnGameEnded;
+    public event Action OnGameReady;
+    public event Action OnGameEnded;
 
     private void Awake()
     {
@@ -20,8 +16,8 @@ public class GameModeBase : MonoBehaviour
 
     private void OnDestroy()
     {
-        Terminate();
         OnGameEnded?.Invoke();
+        Terminate();
     }
     public virtual void Init(GameModeParams inParams) 
     {
@@ -36,10 +32,11 @@ public class GameModeBase : MonoBehaviour
         AppSystem.GameMode = null;
     }
 
+    public DiffcultyPreset DiffcultyPreset { get; protected set; }
+
     protected virtual void InitGameLibs() { }
     protected virtual void InitGameSystems() { }
 
-    public DiffcultyPreset DiffcultyPreset { get; protected set; }
     protected AppSystemClient AppSystem { get; set; }
 
 }

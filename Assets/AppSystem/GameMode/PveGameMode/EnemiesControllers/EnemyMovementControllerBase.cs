@@ -6,14 +6,15 @@ using static Utils;
 
 public class EnemyMovementControllerBase : MonoBehaviour
 {
+    public Rigidbody2D rigidbody;
+    public Transform localTransform;
+
     public void Init(GameObject inTarget, EnemyStatsPreset enemyStatsPreset)
     {
-        Speed = enemyStatsPreset.Speed;
-        KeepingDistance = enemyStatsPreset.KeepDistance;
-        Acceletation = enemyStatsPreset.Acceleration;
-        MaxSpeed = enemyStatsPreset.MaxSpeed;
-        RigBody = gameObject.GetComponent<Rigidbody2D>();
-        LocalTransform = gameObject.GetComponent<Transform>();
+        Speed = enemyStatsPreset.speed;
+        KeepingDistance = enemyStatsPreset.keepDistance;
+        Acceletation = enemyStatsPreset.acceleration;
+        MaxSpeed = enemyStatsPreset.maxSpeed;
         TargetTransform = inTarget.GetComponent<Transform>();
     }
 
@@ -32,23 +33,22 @@ public class EnemyMovementControllerBase : MonoBehaviour
     private void StartMoving()
     {
         Speed = Mathf.MoveTowards(Speed, MaxSpeed, Acceletation);
-        var angle = LocalTransform.rotation = CalculateRotationAngle(TargetTransform.position, LocalTransform.position);;
-        RigBody.velocity = angle * Vector2.right * Speed;
+        var angle = localTransform.rotation = CalculateRotationAngle(TargetTransform.position, localTransform.position);;
+        rigidbody.velocity = angle * Vector2.right * Speed;
     }
 
     private void StopMoving()
     {
-        RigBody.velocity = new Vector2();
+        rigidbody.velocity = new Vector2();
     }
     private bool IsMoving()
     {
-        float distance = Vector3.Distance(LocalTransform.position, TargetTransform.position);
-        return (distance >= KeepingDistance);
+        float distance = Vector3.Distance(localTransform.position, TargetTransform.position);
+        return (Mathf.Approximately(distance, KeepingDistance) || distance > KeepingDistance);
     }
 
     private Transform TargetTransform { get; set; }
-    private Transform LocalTransform { get; set; }
-    private Rigidbody2D RigBody { get; set; }
+
     private float Speed { get; set; }
     private float KeepingDistance { get; set; }
     private float Acceletation { get; set; }

@@ -423,39 +423,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyPresets:
-  - type: 0
-    clientMaxHealth: 100
-    clienMaxArmor: 150
-    clientArmorRegenValue: 1
-    clientDamage: 15
-    clientArmorRegenRateMs: 100
-    enemyHealthScale: 0.7
-    enemyDamageScale: 0.7
-    enemySpawnRateSec: 2
-    armorRegenDelay: 1
-    scoreMultiplicator: 1
-  - type: 1
-    clientMaxHealth: 100
-    clienMaxArmor: 150
-    clientArmorRegenValue: 0.7
-    clientDamage: 15
-    clientArmorRegenRateMs: 100
-    enemyHealthScale: 1
-    enemyDamageScale: 1
-    enemySpawnRateSec: 1
-    armorRegenDelay: 3
-    scoreMultiplicator: 2
-  - type: 2
-    clientMaxHealth: 100
-    clienMaxArmor: 150
-    clientArmorRegenValue: 0.3
-    clientDamage: 15
-    clientArmorRegenRateMs: 100
-    enemyHealthScale: 1.1
-    enemyDamageScale: 1.1
-    enemySpawnRateSec: 0.7
-    armorRegenDelay: 5
-    scoreMultiplicator: 3
+  - Type: 0
+    ClientMaxHealth: 100
+    ClienMaxArmor: 150
+    ClientArmorRegenValue: 0.3
+    ClientDamage: 25
+    ClientArmorRegenRateMs: 100
+    EnemyHealthScale: 0.7
+    EnemyDamageScale: 0.7
+    EnemySpawnRateSec: 2
+    ArmorRegenDelay: 2
+    ScoreMultiplicator: 1
+  - Type: 1
+    ClientMaxHealth: 100
+    ClienMaxArmor: 150
+    ClientArmorRegenValue: 0.2
+    ClientDamage: 25
+    ClientArmorRegenRateMs: 100
+    EnemyHealthScale: 1
+    EnemyDamageScale: 1
+    EnemySpawnRateSec: 1
+    ArmorRegenDelay: 3
+    ScoreMultiplicator: 2
+  - Type: 2
+    ClientMaxHealth: 100
+    ClienMaxArmor: 150
+    ClientArmorRegenValue: 0.1
+    ClientDamage: 25
+    ClientArmorRegenRateMs: 100
+    EnemyHealthScale: 1.1
+    EnemyDamageScale: 1.1
+    EnemySpawnRateSec: 0.7
+    ArmorRegenDelay: 4
+    ScoreMultiplicator: 3
 --- !u!114 &1307388156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,44 +486,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPresets:
   - enemyType: 0
-    hp: 75
-    speed: 4
-    maxSpeed: 4
-    keepDistance: 0
-    damage: 50
-    acceleration: 0
-    attackFrequency: 1
-    scoreValue: 200
-  - enemyType: 1
-    hp: 30
-    speed: 6
-    maxSpeed: 6
+    hp: 100
+    speed: 2
+    maxSpeed: 2
     keepDistance: 0
     damage: 25
     acceleration: 0
     attackFrequency: 1
     scoreValue: 100
-  - enemyType: 2
-    hp: 200
-    speed: 2
-    maxSpeed: 2
+  - enemyType: 1
+    hp: 50
+    speed: 4.5
+    maxSpeed: 4.5
     keepDistance: 0
-    damage: 100
-    acceleration: 0
-    attackFrequency: 1
-    scoreValue: 400
-  - enemyType: 3
-    hp: 30
-    speed: 5
-    maxSpeed: 5
-    keepDistance: 5
     damage: 20
     acceleration: 0
-    attackFrequency: 2
+    attackFrequency: 1
+    scoreValue: 50
+  - enemyType: 2
+    hp: 200
+    speed: 1
+    maxSpeed: 1
+    keepDistance: 0
+    damage: 50
+    acceleration: 0
+    attackFrequency: 1
+    scoreValue: 200
+  - enemyType: 3
+    hp: 75
+    speed: 3
+    maxSpeed: 3
+    keepDistance: 5
+    damage: 15
+    acceleration: 0
+    attackFrequency: 1
     scoreValue: 100
   - enemyType: 4
     hp: 1
-    speed: 0.5
+    speed: 0.1
     maxSpeed: 30
     keepDistance: 0
     damage: 75

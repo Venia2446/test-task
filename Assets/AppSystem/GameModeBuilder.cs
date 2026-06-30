@@ -1,4 +1,3 @@
-using static DifficultyPresetsLib;
 using static Globals;
 
 public class GameModeBuilder
@@ -6,10 +5,6 @@ public class GameModeBuilder
     public GameModeBuilder(DifficultyPresetsLib presetsLib)
     {
         difficultyPresetsLib = presetsLib;
-    }
-
-    public void Init()
-    {
         GameModeParams = new GameModeParams();
     }
 

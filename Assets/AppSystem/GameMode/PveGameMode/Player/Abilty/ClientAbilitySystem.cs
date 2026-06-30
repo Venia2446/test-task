@@ -11,7 +11,7 @@ public class ClientAbilitySystem : MonoBehaviour
         Abilities = abilitiesLib.Abilities;
         foreach (var ability in Abilities)
         {
-            ability.Value.Controller.Init(ability.Value);
+            ability.Value.controller.Init(ability.Value);
         }
     }
 
@@ -19,7 +19,7 @@ public class ClientAbilitySystem : MonoBehaviour
     {
         foreach (var ability in Abilities)
         {
-            ability.Value.Controller?.Terminate();
+            ability.Value.controller?.Terminate();
         }
     }
 
