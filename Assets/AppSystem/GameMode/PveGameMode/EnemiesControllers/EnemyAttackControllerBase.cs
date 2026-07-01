@@ -45,10 +45,11 @@ public class EnemyAttackControllerBase : MonoBehaviour
 
     protected ClientHealthController ClientHealthController { get; set; }
     protected GameObject Target { get; set; }
-    private WaitForSeconds AttackDelay { get; set; }
 
     protected float Damage { get; set; }
     protected float AttackFrequency { get; set; }
     protected bool IsAttacking { get; set; }
+
+    private WaitForSeconds AttackDelay { get; set; }
 
 }

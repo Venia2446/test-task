@@ -104,14 +104,14 @@ public class ClientHealthController : HealthControllerBase
         StopAllCoroutines();
     }
 
-
-    private const float minArmor = 0;
-    private WaitForSeconds RegenDelay { get; set; }
-    private WaitForSeconds RegenFrequency { get; set; }
-
     public float MaxArmor { get; private set; }
     public float Armor { get; private set; }
     public float ArmorRegenValue { get; private set; }
     public float ArmorRegenRateMs { get; private set; }
     public float ArmorRegDelay { get; private set; }
+
+    private const float minArmor = 0;
+    private WaitForSeconds RegenDelay { get; set; }
+    private WaitForSeconds RegenFrequency { get; set; }
+
 }
