@@ -8,7 +8,7 @@ public static class Globals
     public const string enemyTag = "Enemy";
     public const DifficultyPresetType defaultDifficulty = DifficultyPresetType.EASY;
     public const int maxFill = 1;
-    public const float destoyObjDelay = 1.5f;
+    public const float destoyObjDelay = 1.6f;
 
     public enum EnemyType
     {

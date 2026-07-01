@@ -21,6 +21,8 @@ public class GameModeBase : MonoBehaviour
     }
     public virtual void Init(GameModeParams inParams) 
     {
+        AppSystem.PauseManager.TryUnpaseGame();
+
         DiffcultyPreset = inParams.DiffPreset;
         InitGameLibs();
         InitGameSystems();

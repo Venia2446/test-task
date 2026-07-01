@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Globals;
-using static DifficultyPresetsLib;
 
 public class SpawnerControllersManager : MonoBehaviour
 {
-    public GameObject[] spawners;
+    public EnemySpawnController[] spawners;
 
-    public void Init(DiffcultyPreset inPreset, EnemiesStructLib enemiesStructLib, PlayerController playerController)
+    public void Init(DiffcultyPreset inPreset, EnemiesStructLib enemiesStructLib, PlayerController playerController, EnemiesPool enemiesPool)
     {
         Target = playerController.player;
         EnemyDatas = enemiesStructLib.GetEnemiesDatas();
@@ -17,7 +16,7 @@ public class SpawnerControllersManager : MonoBehaviour
         
         foreach (var spawner in spawners)
         {
-            spawnerControllers.Add(spawner.GetComponent<EnemySpawnController>());
+            spawner.Init(enemiesPool);
         }
 
         StartCoroutine(StartSpawnLogic());
@@ -41,12 +40,10 @@ public class SpawnerControllersManager : MonoBehaviour
 
     public void Spawn()
     {
-        var rdnSpawnerIdx = Random.Range(0, spawnerControllers.Count - 1);
+        var rdnSpawnerIdx = Random.Range(0, spawners.Length - 1);
         var rdnEnemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
-        spawnerControllers[rdnSpawnerIdx].SpawnEnemy(EnemyDatas[rdnEnemyType], Target);
+        spawners[rdnSpawnerIdx].SpawnEnemy(EnemyDatas[rdnEnemyType], Target);
     }
-
-    private List<EnemySpawnController> spawnerControllers = new List<EnemySpawnController>();
 
     private WaitForSeconds SpawnDelay { get; set; }
     private Dictionary<EnemyType, EnemyData> EnemyDatas { get; set; }

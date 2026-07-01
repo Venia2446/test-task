@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyBulletController : BulletControllerBase
 {
-    public override void Init(BulletDataBase bulletData)
+    public override void InitInner(BulletDataBase bulletData)
     {
-        base.Init(bulletData);
+        base.InitInner(bulletData);
 
         var castedData = (EnemyBulletData)bulletData;
         ClientHealthController = castedData.ClientHealthController;

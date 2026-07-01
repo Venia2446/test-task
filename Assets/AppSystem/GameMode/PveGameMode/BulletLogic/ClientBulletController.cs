@@ -13,4 +13,5 @@ public class ClientBulletController : BulletControllerBase
             enemyHealthController.RegisterTakingDamage(Damage);
         }
     }
+
 }

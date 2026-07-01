@@ -16,6 +16,7 @@ MonoBehaviour:
   rigidbody: {fileID: 5598451527549575525}
   scale: 15
   transform: {fileID: 9166766658333345764}
+  defaultSclate: {x: 0.74381256, y: 0.36294872, z: 1}
 --- !u!1001 &3849335789005180452
 PrefabInstance:
   m_ObjectHideFlags: 0

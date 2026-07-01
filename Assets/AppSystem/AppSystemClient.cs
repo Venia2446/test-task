@@ -12,6 +12,7 @@ public class AppSystemClient : MonoBehaviour
     public LoadingScreenController loadingScreenController;
 
     public event Action OnCreated;
+
     public static AppSystemClient Instance { get; private set; }
 
     private void Awake()

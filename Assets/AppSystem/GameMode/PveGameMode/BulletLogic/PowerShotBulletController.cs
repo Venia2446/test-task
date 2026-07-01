@@ -7,14 +7,30 @@ public class PowerShotBulletController : ClientBulletController
 
     public float scale = 15;
     public Transform transform;
+    public Vector3 defaultSclate;
 
-    public override void Init(BulletDataBase bulletData)
+    protected override void CacheData(BulletDataBase bulletData)
     {
-        base.Init(bulletData);
+        base.CacheData(bulletData);
 
-        var castedData = (PowerShotBulletData)bulletData;
-        var newScale = castedData.Charge / scale;
+        Data = (PowerShotBulletData)bulletData;
+    }
+
+    protected override void StartMovement(Quaternion angle)
+    {
+        base.StartMovement(angle);
+
+        var newScale = Data.Charge / scale;
         transform.localScale += new Vector3(newScale, newScale, newScale);
     }
+
+    protected override void Destroy(Collider2D collision)
+    {
+        transform.localScale = defaultSclate;
+
+        base.Destroy(collision);
+    }
+
+    private PowerShotBulletData Data { get; set; }
 
 }

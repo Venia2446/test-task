@@ -34,6 +34,13 @@ public class DamageEffectController : MonoBehaviour
         StartCoroutine(StartDeathEffect());
     }
 
+    public void ResetEffects()
+    {
+        normalState.enabled = true;
+        deathEffect.enabled = false;
+        deathEffect.color = new Color(deathEffect.color.r, deathEffect.color.g, deathEffect.color.b, 1f);
+    }
+
     private IEnumerator StartDeathEffect()
     {
         hitEffect.SetActive(false);

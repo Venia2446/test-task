@@ -24,7 +24,6 @@ public class ChangeSceneButtonController : ButtonControllerBase
 
         var appSystem = AppSystemClient.Instance;
 
-        appSystem.PauseManager.TryUnpaseGame();
         appSystem.loadingScreenController.LoadScene(scene);
     }
 

@@ -12,8 +12,11 @@ public class PveGameMode : GameModeBase
     public SpawnerControllersManager spawnerManager;
     public PlayerController playerController;
     public ScoreManager scoreManager;
+    public EnemiesPool enemiesPool;
+    public BulletsPool bulletsPool;
 
     public AudioSystem audioSystem;
+
 
     protected override void InitGameLibs()
     {
@@ -29,10 +32,12 @@ public class PveGameMode : GameModeBase
     {
         base.InitGameSystems();
 
+        bulletsPool.Init(bulletsStructLib);
+        enemiesPool.Init(enemiesStructLib);
         audioSystem.Init(soundsLib);
         scoreManager.Init(DiffcultyPreset);
-        playerController.Init(DiffcultyPreset, bulletsStructLib, abilitiesLib, audioSystem);
-        spawnerManager.Init(DiffcultyPreset, enemiesStructLib, playerController);
+        playerController.Init(DiffcultyPreset, bulletsStructLib, abilitiesLib, audioSystem, bulletsPool);
+        spawnerManager.Init(DiffcultyPreset, enemiesStructLib, playerController, enemiesPool);
     }
 
     protected override void Terminate()

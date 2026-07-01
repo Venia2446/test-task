@@ -16,10 +16,11 @@ public class ClientAttackController : MonoBehaviour
 
     public int bulletsCount = 5;
 
-    public void Init(DiffcultyPreset preset, BulletsStructLib bulletStructLib, AudioSystem inAudioSystem)
+    public void Init(DiffcultyPreset preset, BulletsStructLib bulletStructLib, AudioSystem inAudioSystem, BulletsPool inBulletsPool)
     {
         ResetAttackDelay = new WaitForSeconds(attackDelay);
 
+        BulletsPool = inBulletsPool;
         AudioSystem = inAudioSystem;
         BulletStruct = bulletStructLib.GetBulletStruct(BulletType.SMALL);
         ClientDamage = preset.ClientDamage;
@@ -45,7 +46,7 @@ public class ClientAttackController : MonoBehaviour
     {
         var objPos = gunTransform.position;
         var worldMousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
-        return Utils.CalculateRotationAngleRad(worldMousePos, objPos);
+        return CalculateRotationAngleRad(worldMousePos, objPos);
     }
 
     private void Update()
@@ -79,12 +80,12 @@ public class ClientAttackController : MonoBehaviour
             var spreadedRad = inAngleRad - Random.Range(-spreadeAngle, spreadeAngle);
             var spreadedAngle = Quaternion.Euler(0f, 0f, spreadedRad);
 
-            var obj = Instantiate(BulletStruct.gameObj, spawnerTransform.position, spreadedAngle);
             var bulletData = new BulletDataBase();
             bulletData.Angle = spreadedAngle;
             bulletData.Damage = ClientDamage;
             bulletData.BulletStruct = BulletStruct;
 
+            var obj = BulletsPool.GetFromPool(BulletStruct.type, spawnerTransform.position, spreadedAngle);
             var bulletContr = obj.GetComponent<ClientBulletController>();
             bulletContr.Init(bulletData);
         }
@@ -97,6 +98,7 @@ public class ClientAttackController : MonoBehaviour
     private BulletStruct BulletStruct { get; set; }
     private Camera Camera { get; set; }
     private AudioSystem AudioSystem { get; set; }
+    private BulletsPool BulletsPool { get; set; }
     private float ClientDamage { get; set; }
     private bool IsAttackReady { get; set; }
     private bool IsInited { get; set; }

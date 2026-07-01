@@ -143,6 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   attackData: {fileID: 4847807048338264182}
+  collider: {fileID: 8182201583090400146}
+  hitEffectController: {fileID: 5289962225766965472}
   enemyMovementController: {fileID: 190680759382941884}
   enemyAttackControllerBase: {fileID: 0}
   enemyHealthController: {fileID: 6475402906639814100}
@@ -158,10 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fe126757652149be8f54bc746192c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffectController: {fileID: 5289962225766965472}
-  collider: {fileID: 8182201583090400146}
-  movementController: {fileID: 190680759382941884}
-  attackControllerBase: {fileID: 1348276347947197494}
 --- !u!114 &190680759382941884
 MonoBehaviour:
   m_ObjectHideFlags: 0

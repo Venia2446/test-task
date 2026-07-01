@@ -6,25 +6,25 @@ using static Globals;
 
 public class HealthControllerBase : MonoBehaviour
 {
-    public DamageEffectController hitEffectController;
 
-    public event Action<StatType> OnReceiveDamage;
+    public event Action<StatType> OnRecieveDamage;
     public event Action<float> OnReceivedHealthDamage;
     public event Action OnDeath;
 
     public virtual void Init(HealthDataBase data)
     {
-        AudioSystem = ((PveGameMode)AppSystemClient.Instance.GameMode).audioSystem;
+        GameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
+        AudioSystem = GameMode.audioSystem;
 
         MaxHealth = data.MaxHealth;
         Health = MaxHealth;
 
-        OnReceiveDamage += (_) => LocalHandleOnReceiveDamage();
+        OnRecieveDamage += (_) => LocalHandleOnReceiveDamage();
     }
 
     public virtual void Terminate()
     {
-        OnReceiveDamage -= (_) => LocalHandleOnReceiveDamage();
+        OnRecieveDamage -= (_) => LocalHandleOnReceiveDamage();
     }
 
     public virtual void RegisterTakingDamage(float damage)
@@ -63,12 +63,11 @@ public class HealthControllerBase : MonoBehaviour
 
     protected virtual void LocalHandleOnReceiveDamage()
     {
-        hitEffectController.ShowHitEffect();
     }
 
     protected void FireRecieveDamage(StatType type)
     {
-        OnReceiveDamage?.Invoke(type);
+        OnRecieveDamage?.Invoke(type);
     }
 
     public float MinHealth { get { return minHealth; } }
@@ -78,4 +77,5 @@ public class HealthControllerBase : MonoBehaviour
 
     protected const float minHealth = 0;
     protected AudioSystem AudioSystem { get; set; }
+    protected PveGameMode GameMode { get; set; }
 }

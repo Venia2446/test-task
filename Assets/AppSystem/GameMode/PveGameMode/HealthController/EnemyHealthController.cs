@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using static Globals;
 
 public class EnemyHealthController : HealthControllerBase
 {
 
-    public Collider2D collider;
-    public EnemyMovementControllerBase movementController;
-    public EnemyAttackControllerBase attackControllerBase;
-
+    public Action OnRequestReturnToPool;
 
     public override void Init(HealthDataBase data)
     {
@@ -37,19 +35,19 @@ public class EnemyHealthController : HealthControllerBase
     protected void Destroy()
     {
         AudioSystem.PlayOneShot(AudioClipType.ENEMY_DEAD);
-
-        collider.enabled = false;
-        movementController.enabled = false;
-        attackControllerBase.Terminate();
-
-        hitEffectController.StartEnemyDeathEffect();
         StartCoroutine(DelayedDestroy());
     }
 
     private IEnumerator DelayedDestroy()
     {
         yield return DestroyDelay;
-        Object.Destroy(gameObject);
+        OnRequestReturnToPool?.Invoke();
+    }
+
+    public void ResetController()
+    {
+        IsDead = false;
+        Health = MaxHealth;
     }
 
     private WaitForSeconds DestroyDelay { get; set; }

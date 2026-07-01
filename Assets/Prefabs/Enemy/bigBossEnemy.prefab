@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: enemyAttackControllerBase
       value: 
       objectReference: {fileID: 2543167366866790924}
+    - target: {fileID: 6475402906639814100, guid: ccb3955522f24a54986b2bcee719e062, type: 3}
+      propertyPath: type
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7057320198522959355, guid: ccb3955522f24a54986b2bcee719e062, type: 3}
       propertyPath: m_Sprite
       value: 

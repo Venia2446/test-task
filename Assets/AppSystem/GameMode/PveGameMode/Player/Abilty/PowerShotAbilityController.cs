@@ -6,6 +6,7 @@ using System;
 public class PowerShotAbilityController : ClientAbilityControllerBase
 {
     public Transform spawn;
+    public Transform defaultAbilityTransform;
 
     public event Action<float> OnChargeUpdated;
 
@@ -15,7 +16,9 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
 
         var gameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
         ClientAttackController = gameMode.playerController.clientAttackController;
+        BulletsPool = gameMode.bulletsPool;
         BulletStruct = gameMode.bulletsStructLib.GetBulletStruct(Globals.BulletType.POWER_SHOT);
+
         CastedData = (ChargedAbilityData)Data;
     }
 
@@ -57,26 +60,24 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
         IsCharging = false;
  
         var angle = ClientAttackController.GetAngleToMouseTarget();
-        StartCoroutine(BuildBullet(BulletStruct, spawn.position, angle, CastedData.damage * Charge));
+        BuildBullet(spawn.position, angle, CastedData.damage * Charge);
 
         Charge = 0;
         OnChargeUpdated?.Invoke(Charge);
         StartCooldown();
     }
 
-    private IEnumerator BuildBullet(BulletStruct bulletStructure, Vector3 position, Quaternion angle, float damage)
+    private void BuildBullet(Vector3 position, Quaternion angle, float damage)
     {
-        var obj = Instantiate(bulletStructure.gameObj, position, angle);
         var bulletData = new PowerShotBulletData();
         bulletData.Angle = angle;
         bulletData.Damage = damage;
         bulletData.BulletStruct = BulletStruct;
         bulletData.Charge = Charge;
 
+        var obj = BulletsPool.GetFromPool(Globals.BulletType.POWER_SHOT, position, angle);
         var bulletController = obj.GetComponent<PowerShotBulletController>();
         bulletController.Init(bulletData);
-
-        yield return null;
     }
 
     private void ChargeUp()
@@ -90,6 +91,7 @@ public class PowerShotAbilityController : ClientAbilityControllerBase
     private BulletStruct BulletStruct { get; set; }
     private ClientAttackController ClientAttackController { get; set; }
     private ChargedAbilityData CastedData { get; set; }
+    private BulletsPool BulletsPool { get; set; }
     private bool IsCharging { get; set; }
 
 }

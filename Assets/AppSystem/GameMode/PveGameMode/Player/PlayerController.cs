@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static DifficultyPresetsLib;
-using static BulletsStructLib;
 using static Globals;
 
 public class PlayerController : MonoBehaviour
@@ -13,18 +11,29 @@ public class PlayerController : MonoBehaviour
     public ClientAttackController clientAttackController;
     public ClientAbilitySystem clientAbilitySystem;
 
-    public void Init(DiffcultyPreset diffPreset, BulletsStructLib bulletStructLib, AbilitiesLib abilitiesLib, AudioSystem audioSystem)
+    public DamageEffectController damageEffectController;
+
+    public void Init(DiffcultyPreset diffPreset, BulletsStructLib bulletStructLib, AbilitiesLib abilitiesLib, AudioSystem audioSystem, BulletsPool bulletsPool)
     {
+        clientHealthController.OnRecieveDamage += HandleOnRecieveDamage;
         clientHealthController.Init(CreateHealthData(diffPreset));
-        clientAttackController.Init(diffPreset, bulletStructLib, audioSystem);
+
+        clientAttackController.Init(diffPreset, bulletStructLib, audioSystem, bulletsPool);
         clientAbilitySystem.Init(abilitiesLib);
     }
 
     public void Terminate()
     {
         clientAbilitySystem.Terminate();
-        clientHealthController.Terminate();
         clientAttackController.Terminate();
+
+        clientHealthController.OnRecieveDamage -= HandleOnRecieveDamage;
+        clientHealthController.Terminate();
+    }
+
+    private void HandleOnRecieveDamage(StatType type)
+    {
+        damageEffectController.ShowHitEffect();
     }
 
     protected ClientHealthData CreateHealthData(DiffcultyPreset diffPreset)
@@ -38,4 +47,5 @@ public class PlayerController : MonoBehaviour
         healtData.ArmorRegenDelay  = diffPreset.ArmorRegenDelay;
         return healtData;
     }
+
 }

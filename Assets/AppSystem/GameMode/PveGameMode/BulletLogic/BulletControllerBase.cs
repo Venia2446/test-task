@@ -8,15 +8,40 @@ public class BulletControllerBase : MonoBehaviour
     public float speed;
     public Rigidbody2D rigidbody;
 
-    public virtual void Init(BulletDataBase bulletData)
+    public void Init(BulletDataBase bulletData)
     {
-        BulletStruct = bulletData.BulletStruct;
-        Damage = bulletData.Damage;
-        rigidbody.velocity = bulletData.Angle * Vector2.right * speed;
+        if (IsInited)
+        {
+            CacheData(bulletData);
+            StartMovement(bulletData.Angle);
+            return;
+        }
 
+        IsInited = true;
+        InitInner(bulletData);
+    }
+
+    public virtual void InitInner(BulletDataBase bulletData)
+    {
+        GameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
         actions.Add(BulletAction.DESTROY, Destroy);
         actions.Add(BulletAction.HIT_AND_DESTROY, RegisterAndDestroy);
         actions.Add(BulletAction.HIT, RegisterDamage);
+
+        CacheData(bulletData);
+        StartMovement(bulletData.Angle);
+    }
+
+    protected virtual void CacheData(BulletDataBase bulletData)
+    {
+        BulletsPool = GameMode.bulletsPool;
+        BulletStruct = bulletData.BulletStruct;
+        Damage = bulletData.Damage;
+    }
+
+    protected virtual void StartMovement(Quaternion angle)
+    {
+        rigidbody.velocity = angle * Vector2.right * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,9 +65,9 @@ public class BulletControllerBase : MonoBehaviour
         
     }
 
-    private void Destroy(Collider2D collision)
+    protected virtual void Destroy(Collider2D collision)
     {
-        Object.Destroy(gameObject);
+        BulletsPool.ReturnToPool(BulletStruct.type, gameObject);
     }
 
     private void RegisterAndDestroy(Collider2D collision)
@@ -61,5 +86,10 @@ public class BulletControllerBase : MonoBehaviour
     private delegate void Action(Collider2D collision);
     private new Dictionary<BulletAction, Action> actions = new Dictionary<BulletAction, Action>();
     private BulletStruct BulletStruct { get; set; }
+    private BulletsPool BulletsPool { get; set; }
+
+    private PveGameMode GameMode { get; set; }
+    private bool IsInited { get; set; }
+    
 
 }

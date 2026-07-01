@@ -13,36 +13,55 @@ public class EnemyRangeAttackController : EnemyAttackControllerBase
     {
         base.Init(enemyAttackDataBase);
 
+        var gameMode = (PveGameMode)AppSystemClient.Instance.GameMode;
+        BulletsPool = gameMode.bulletsPool;
+
         var castedData = (EnemyRangeAttackData)enemyAttackDataBase;
         BulletStruct = castedData.BulletStruct;
         TargetTransform = Target.GetComponent<Transform>();
+    }
+
+    private void OnEnable()
+    {
         StartAttack();
+    }
+
+    private void OnDisable()
+    {
+        StopAttack();
     }
 
     protected override void Attack()
     {
         base.Attack();
 
+        if (TargetTransform == null)
+        {
+            return;
+        }
+
         var angle = CalculateRotationAngle(TargetTransform.position, localTranform.position);
         localTranform.rotation = angle;
 
-        BuildBullet(BulletStruct, localTranform.transform.position, angle);
+        BuildBullet(localTranform.transform.position, angle);
     }
 
-    private void BuildBullet(BulletStruct bulletStructure, Vector3 position, Quaternion angle)
+    private void BuildBullet(Vector3 position, Quaternion angle)
     {
-        var obj = Instantiate(bulletStructure.gameObj, position, angle);
         var bulletData = new EnemyBulletData();
         bulletData.Angle = angle;
         bulletData.Damage = Damage;
         bulletData.BulletStruct = BulletStruct;
         bulletData.ClientHealthController = ClientHealthController;
 
+        var obj = BulletsPool.GetFromPool(BulletStruct.type, position, angle);
         var bulletController = obj.GetComponent<EnemyBulletController>();
         bulletController.Init(bulletData);
     }
 
-    private Transform TargetTransform { get; set; }
     protected BulletStruct BulletStruct { get; set; }
+    
+    private Transform TargetTransform { get; set; }
+    private BulletsPool BulletsPool { get; set; }
 
 }
